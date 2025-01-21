@@ -1,0 +1,15 @@
+body {
+    background-color: #000;
+    margin: 0;
+}
+
+#ReactPlayerAndSketchWrapper {
+    aspect-ratio: 16 / 9;
+    background-color: #333333;
+    min-width: 480px;
+    min-height: 360px;
+}
+
+.react-player {
+    float: right;
+}

@@ -1,9 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import Telestrator from './Telestrator.tsx'
+import { Provider } from 'react-redux'
+import { store } from './store'
+import Telestrator from './Telestrator'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Telestrator />
+    <Provider store={store}>
+      <Telestrator />
+    </Provider>
   </StrictMode>,
 )
