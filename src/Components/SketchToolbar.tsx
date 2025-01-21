@@ -1,7 +1,7 @@
 import { Tools } from 'react-sketch2';
 import { ButtonGroup, Button } from '@mui/joy';
 import { Pencil, Slash, Square, Circle } from 'lucide-react';
-import { useSketchStore } from '../store/sketchStore';
+import { useSketchStore } from '../state/SketchState';
 
 export default function SketchToolbar() {
   const { tool, setTool } = useSketchStore();

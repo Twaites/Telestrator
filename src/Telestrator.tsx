@@ -1,8 +1,8 @@
 import './Telestrator.css'
-import VideoPlayer from './Components/VideoPlayer'
-import SketchCanvas from './Components/SketchCanvas'
-import SketchToolbar from './Components/SketchToolbar'
-import VideoControls from './Components/VideoControls'
+import VideoPlayer from './components/VideoPlayer'
+import SketchCanvas from './components/SketchCanvas'
+import SketchToolbar from './components/SketchToolbar'
+import VideoControls from './components/VideoControls'
 
 function Telestrator() {
   return (

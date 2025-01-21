@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button, Grid, Input, Slider, Stack } from '@mui/joy';
-import { useVideoStore } from '../store/videoStore';
+import { useVideoStore } from '../state/VideoState';
 
 const playSpeeds = [
   { value: 0.25, label: '0.25x' },

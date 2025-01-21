@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { SketchField } from 'react-sketch2';
-import { useSketchStore } from '../store/sketchStore';
+import { useSketchStore } from '../state/SketchState';
 
 export default function SketchCanvas() {
   const _sketch = useRef<any>();

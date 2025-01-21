@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import ReactPlayer from 'react-player';
-import { useVideoStore } from '../store/videoStore';
+import { useVideoStore } from '../state/VideoState';
 
 export default function VideoPlayer() {
   const _player = useRef<any>();
