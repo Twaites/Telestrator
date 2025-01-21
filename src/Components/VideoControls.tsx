@@ -1,15 +1,6 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid, Input, Slider, Stack } from '@mui/joy';
-import { 
-  setVideoUrl, 
-  setPlaybackSpeed, 
-  toggleMute, 
-  setPlayStatus, 
-  setVolumeLevel,
-  setVideoProgress 
-} from '../store/videoSlice';
-import type { RootState } from '../store';
+import { useVideoStore } from '../store/videoStore';
 
 const playSpeeds = [
   { value: 0.25, label: '0.25x' },
@@ -20,7 +11,6 @@ const playSpeeds = [
 ];
 
 const VideoControls = () => {
-  const dispatch = useDispatch();
   const [inputVideoUrl, setInputVideoUrl] = useState('');
   const [seeking, setSeeking] = useState(false);
   
@@ -30,11 +20,17 @@ const VideoControls = () => {
     playbackSpeed, 
     volumeLevel, 
     muted,
-    videoProgress 
-  } = useSelector((state: RootState) => state.video);
+    videoProgress,
+    setVideoUrl,
+    setPlaybackSpeed,
+    toggleMute,
+    setPlayStatus,
+    setVolumeLevel,
+    setVideoProgress
+  } = useVideoStore();
 
   const handleVideoUrlChange = () => {
-    dispatch(setVideoUrl(inputVideoUrl));
+    setVideoUrl(inputVideoUrl);
   };
 
   return (
@@ -55,7 +51,7 @@ const VideoControls = () => {
         </Button>
       </Stack>
       <Stack direction="row" spacing={2} sx={{ width: '100%' }}>
-        <Button onClick={() => dispatch(setPlayStatus(!playStatus))}>
+        <Button onClick={() => setPlayStatus(!playStatus)}>
           {playStatus ? "Pause" : "Play"}
         </Button>
         <Slider
@@ -69,13 +65,13 @@ const VideoControls = () => {
           valueLabelDisplay="off"
           onChange={(_, value) => {
             setSeeking(true);
-            dispatch(setVideoProgress(value as number));
+            setVideoProgress(value as number);
           }}
         />
         <Slider
           aria-label="Playback Speed"
           value={playbackSpeed}
-          onChange={(_, value) => dispatch(setPlaybackSpeed(value as number))}
+          onChange={(_, value) => setPlaybackSpeed(value as number)}
           step={0.25}
           size='md'
           min={0.25}
@@ -87,13 +83,13 @@ const VideoControls = () => {
         <Slider
           aria-label="Volume"
           value={volumeLevel}
-          onChange={(_, value) => dispatch(setVolumeLevel(value as number))}
+          onChange={(_, value) => setVolumeLevel(value as number)}
           step={0.1}
           min={0}
           max={1}
           valueLabelDisplay="auto"
         />
-        <Button onClick={() => dispatch(toggleMute())}>
+        <Button onClick={toggleMute}>
           {muted ? "Unmute" : "Mute"}
         </Button>
       </Stack>

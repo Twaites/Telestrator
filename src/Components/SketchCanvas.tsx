@@ -1,11 +1,10 @@
 import { useRef } from 'react';
-import { useSelector } from 'react-redux';
 import { SketchField } from 'react-sketch2';
-import type { RootState } from '../store';
+import { useSketchStore } from '../store/sketchStore';
 
 export default function SketchCanvas() {
   const _sketch = useRef<any>();
-  const { tool, lineColor, lineWidth } = useSelector((state: RootState) => state.sketch);
+  const { tool, lineColor, lineWidth } = useSketchStore();
   
   return (
     <SketchField
