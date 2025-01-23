@@ -23,7 +23,7 @@ interface VideoState {
   setSeeking: (seeking: boolean) => void;
   setDuration: (duration: number) => void;
   setIsLive: (isLive: boolean) => void;
-  setPlayerRef: (ref: React.RefObject<ReactPlayer>) => void;
+  setPlayerRef: (ref: React.RefObject<ReactPlayer> | null) => void;
 }
 
 export const useVideoStore = create<VideoState>((set) => ({

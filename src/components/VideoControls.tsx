@@ -1,13 +1,12 @@
 import { useState, useCallback } from 'react';
 import { Button, Slider, Stack, Autocomplete, IconButton } from '@mui/joy';
 import { useVideoStore } from '../state/VideoState';
-import { Play, Pause, Volume2, VolumeX, Settings } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { formatTime } from '../utils/formatTime';
 import SpeedMenu from './SpeedMenu';
 
 const VideoControls = () => {
   const [inputVideoUrl, setInputVideoUrl] = useState('');
-  const [showSpeedMenu, setShowSpeedMenu] = useState(false);
   
   const { 
     currentVideoUrl,
@@ -51,7 +50,7 @@ const VideoControls = () => {
     }
   }, [muted, setVolumeLevel, toggleMute]);
 
-  const handleSeek = useCallback((_: SliderChangeEvent, value: SliderValue) => {
+  const handleSeek = useCallback((_: Event, value: number | number[]) => {
     setSeeking(true);
     setVideoProgress(value as number);
   }, [setSeeking, setVideoProgress]);
@@ -93,36 +92,13 @@ const VideoControls = () => {
       </Stack>
 
       <Stack spacing={0.5}>
-        {/* Progress bar */}
-        {!isLive && (
-          <Slider
-            sx={{
-              '--Slider-track-height': '4px',
-              '--Slider-thumb-size': '12px',
-              '&:hover': {
-                '--Slider-track-height': '6px',
-                '--Slider-thumb-size': '14px',
-              },
-              py: 1
-            }}
-            value={videoProgress}
-            min={0}
-            max={1000}
-            valueLabelDisplay="off"
-            onChange={handleSeek}
-            onChangeCommitted={handleSeekCommitted}
-            disabled={isLive}
-          />
-        )}
-
-        {/* Controls bar */}
         <Stack 
           direction="row" 
           spacing={2} 
           alignItems="center"
           justifyContent="space-between"
         >
-          <Stack direction="row" spacing={1} alignItems="center">
+          <Stack direction="row" spacing={1} alignItems="center" sx={{ flex: 1 }}>
             <IconButton
               variant="plain"
               onClick={handlePlayPause}
@@ -130,7 +106,38 @@ const VideoControls = () => {
               {playStatus ? <Pause size={20} /> : <Play size={20} />}
             </IconButton>
 
-            <Stack direction="row" spacing={1} alignItems="center" sx={{ minWidth: 200 }}>
+            {!isLive && (
+              <Slider
+                sx={{
+                  '--Slider-track-height': '4px',
+                  '--Slider-thumb-size': '12px',
+                  '&:hover': {
+                    '--Slider-track-height': '6px',
+                    '--Slider-thumb-size': '14px',
+                  },
+                  flex: 1,
+                  py: 1
+                }}
+                value={videoProgress}
+                min={0}
+                max={1000}
+                valueLabelDisplay="off"
+                onChange={handleSeek}
+                onChangeCommitted={handleSeekCommitted}
+                disabled={isLive}
+              />
+            )}
+
+            <span style={{ fontSize: '0.875rem', color: '#fff', minWidth: 100, textAlign: 'center' }}>
+              {isLive ? 'LIVE' : `${formatTime(currentTime)} / ${formatTime(duration)}`}
+            </span>
+
+            <SpeedMenu 
+              playbackSpeed={playbackSpeed}
+              onSpeedChange={handleSpeedChange}
+            />
+
+            <Stack direction="row" spacing={1} alignItems="center">
               <IconButton
                 variant="plain"
                 onClick={toggleMute}
@@ -151,18 +158,7 @@ const VideoControls = () => {
                 }}
               />
             </Stack>
-
-            <Stack direction="row" spacing={1}>
-              <span style={{ fontSize: '0.875rem', color: '#fff' }}>
-                {isLive ? 'LIVE' : `${formatTime(currentTime)} / ${formatTime(duration)}`}
-              </span>
-            </Stack>
           </Stack>
-
-          <SpeedMenu 
-            playbackSpeed={playbackSpeed}
-            onSpeedChange={handleSpeedChange}
-          />
         </Stack>
       </Stack>
     </Stack>

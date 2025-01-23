@@ -1,5 +1,5 @@
-import { Button, Stack, Dropdown, MenuButton, Menu, MenuItem } from '@mui/joy';
-import { Settings } from 'lucide-react';
+import { Dropdown, MenuButton, Menu, MenuItem } from '@mui/joy';
+import { Gauge } from 'lucide-react';
 import { memo } from 'react';
 
 interface SpeedMenuProps {
@@ -14,8 +14,12 @@ const SpeedMenu = memo(({ playbackSpeed, onSpeedChange }: SpeedMenuProps) => {
     <Dropdown>
       <MenuButton
         variant="plain"
-        startDecorator={<Settings size={18} />}
-        sx={{ color: '#fff' }}
+        startDecorator={<Gauge size={18} />}
+        sx={{ 
+          color: '#fff',
+          minWidth: '100px',  // Fixed width for the button
+          justifyContent: 'flex-center'
+        }}
       >
         {playbackSpeed}x
       </MenuButton>
