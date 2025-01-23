@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { useVideoStore } from '../state/VideoState';
 

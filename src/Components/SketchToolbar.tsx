@@ -4,7 +4,7 @@ import { Pencil, Slash, Square, Circle } from 'lucide-react';
 import { useSketchStore } from '../state/SketchState';
 
 export default function SketchToolbar() {
-  const { currentTool, setCurrentTool } = useSketchStore();
+  const { setCurrentTool } = useSketchStore();
 
   const getButtonVariant = (currentTool: string) => {
     return currentTool === currentTool ? 'solid' : 'soft';

@@ -12,7 +12,6 @@ const playSpeeds = [
 
 const VideoControls = () => {
   const [inputVideoUrl, setInputVideoUrl] = useState('');
-  const [seeking, setSeeking] = useState(false);
   
   const { 
     currentVideoUrl,
@@ -26,7 +25,8 @@ const VideoControls = () => {
     toggleMute,
     setPlayStatus,
     setVolumeLevel,
-    setVideoProgress
+    setVideoProgress,
+    setSeeking
   } = useVideoStore();
 
   const handleVideoUrlChange = () => {
