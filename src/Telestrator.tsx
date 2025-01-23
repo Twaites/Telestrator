@@ -13,7 +13,9 @@ function Telestrator() {
       </Grid>
       <Grid xs>
         <Stack spacing={1} padding={1}>
+          <Box paddingRight={2}>
           <VideoControls />
+          </Box>
           <Box id="ReactPlayerAndSketchWrapper">
             <VideoPlayer />
             <SketchCanvas />

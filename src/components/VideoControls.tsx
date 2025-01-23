@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Button, Slider, Stack, Autocomplete, IconButton } from '@mui/joy';
+import { Button, Slider, Stack, Autocomplete, IconButton, Box } from '@mui/joy';
 import { useVideoStore } from '../state/VideoState';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { formatTime } from '../utils/formatTime';
@@ -70,10 +70,12 @@ const VideoControls = () => {
   }, [setPlaybackSpeed]);
 
   return (
-    <Stack spacing={1} sx={{ width: '100%' }}>
+    <Stack spacing={1} sx={{ width: '100%', bgcolor: '#1a1a1a', p: 1}}>
       <Stack direction="row" spacing={1}>
         <Autocomplete
-          sx={{ width: '100%' }}
+          sx={{ 
+            width: '100%',
+          }}
           placeholder="Enter video URL"
           value={currentVideoUrl}
           options={videoUrlHistory}
@@ -84,6 +86,7 @@ const VideoControls = () => {
         />
         <Button
           variant="solid"
+          sx={{ bgcolor: '#2196f3' }}
           onClick={() => handleVideoUrlChange(inputVideoUrl)}
           disabled={!inputVideoUrl || inputVideoUrl === currentVideoUrl}
         >
@@ -91,7 +94,7 @@ const VideoControls = () => {
         </Button>
       </Stack>
 
-      <Stack spacing={0.5}>
+      <Stack spacing={0.5} sx={{ bgcolor: '#2a2a2a', p:0, borderRadius: '4px' }}>
         <Stack 
           direction="row" 
           spacing={2} 
@@ -102,6 +105,7 @@ const VideoControls = () => {
             <IconButton
               variant="plain"
               onClick={handlePlayPause}
+              color="primary"
             >
               {playStatus ? <Pause size={20} /> : <Play size={20} />}
             </IconButton>
@@ -109,14 +113,9 @@ const VideoControls = () => {
             {!isLive && (
               <Slider
                 sx={{
-                  '--Slider-track-height': '4px',
-                  '--Slider-thumb-size': '12px',
-                  '&:hover': {
-                    '--Slider-track-height': '6px',
-                    '--Slider-thumb-size': '14px',
-                  },
                   flex: 1,
-                  py: 1
+                  py: 1,
+                  px: 2,
                 }}
                 value={videoProgress}
                 min={0}
@@ -125,10 +124,11 @@ const VideoControls = () => {
                 onChange={handleSeek}
                 onChangeCommitted={handleSeekCommitted}
                 disabled={isLive}
+                color="neutral"
               />
             )}
 
-            <span style={{ fontSize: '0.875rem', color: '#fff', minWidth: 100, textAlign: 'center' }}>
+            <span style={{ fontFamily: 'sans-serif', fontSize: '0.875rem', color: '#fff', minWidth: 100, textAlign: 'center', paddingLeft: 10 }}>
               {isLive ? 'LIVE' : `${formatTime(currentTime)} / ${formatTime(duration)}`}
             </span>
 
@@ -141,22 +141,26 @@ const VideoControls = () => {
               <IconButton
                 variant="plain"
                 onClick={toggleMute}
+                color="primary"
               >
                 {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
               </IconButton>
+              <Box paddingRight={2}>
               <Slider
                 aria-label="Volume"
                 value={volumeLevel}
+                variant="soft"
                 onChange={handleVolumeChange}
                 step={0.1}
                 min={0}
                 max={1}
                 sx={{ 
                   width: 100,
-                  '--Slider-track-height': '4px',
-                  '--Slider-thumb-size': '12px',
                 }}
+                size="sm"
+                color="primary"
               />
+              </Box>
             </Stack>
           </Stack>
         </Stack>

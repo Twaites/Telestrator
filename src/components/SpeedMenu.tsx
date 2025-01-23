@@ -16,10 +16,10 @@ const SpeedMenu = memo(({ playbackSpeed, onSpeedChange }: SpeedMenuProps) => {
         variant="plain"
         startDecorator={<Gauge size={18} />}
         sx={{ 
-          color: '#fff',
           minWidth: '100px',  // Fixed width for the button
           justifyContent: 'flex-center'
         }}
+        color="primary"
       >
         {playbackSpeed}x
       </MenuButton>
