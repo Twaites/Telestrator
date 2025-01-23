@@ -13,12 +13,12 @@ export default function SketchCanvas() {
       }
       switch (event.code) {
         case 'ArrowLeft':
-          if (event.ctrlKey || event.metaKey) {
+          if (event.shiftKey) {
             sketchRef.current?.undo();
           }
           break;
           case 'ArrowRight':
-            if (event.ctrlKey || event.metaKey) {
+            if (event.shiftKey) {
               sketchRef.current?.redo();
             }
             break;
