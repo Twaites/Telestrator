@@ -31,7 +31,7 @@ export default function VideoPlayer() {
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       // Prevent default behavior for these keys
-      if (['Space', 'ArrowUp', 'ArrowDown', 'KeyMinus', 'KeyPlus'].includes(event.code)) {
+      if (['Space', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
         event.preventDefault();
       }
 
@@ -49,10 +49,10 @@ export default function VideoPlayer() {
           break;
 
         // Speed controls - Left/Right arrows
-        case 'KeyMinus':
+        case 'KeyJ':
           setPlaybackSpeed(Math.max(0.25, playbackSpeed - 0.25));
           break;
-        case 'KeyPlus':
+        case 'KeyL':
           setPlaybackSpeed(Math.min(1, playbackSpeed + 0.25));
           break;
 
