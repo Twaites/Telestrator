@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Grid, Input, Slider, Stack } from '@mui/joy';
+import { Button, Grid, Slider, Stack, Autocomplete } from '@mui/joy';
 import { useVideoStore } from '../state/VideoState';
 
 const playSpeeds = [
@@ -15,12 +15,14 @@ const VideoControls = () => {
   
   const { 
     currentVideoUrl,
+    videoUrlHistory,
     playStatus, 
     playbackSpeed, 
     volumeLevel, 
     muted,
     videoProgress,
     setVideoUrl,
+    addToUrlHistory,
     setPlaybackSpeed,
     toggleMute,
     setPlayStatus,
@@ -29,23 +31,37 @@ const VideoControls = () => {
     setSeeking
   } = useVideoStore();
 
-  const handleVideoUrlChange = () => {
-    setVideoUrl(inputVideoUrl);
+  const handleVideoUrlChange = (newUrl: string | null) => {
+    if (newUrl && newUrl !== currentVideoUrl) {
+      setInputVideoUrl(newUrl);
+      setVideoUrl(newUrl);
+      addToUrlHistory(newUrl);
+    }
   };
 
   return (
     <Grid paddingBottom={1}>
       <Stack direction="row" spacing={1} paddingBottom={1}>
-        <Input
+        <Autocomplete
           sx={{ width: '100%' }}
-          defaultValue={currentVideoUrl}
-          onChange={e => setInputVideoUrl(e.target.value)}
-          onBlur={e => { setInputVideoUrl(e.target.value); handleVideoUrlChange(); }}
+          placeholder="Enter video URL"
+          value={currentVideoUrl}
+          options={videoUrlHistory}
+         // onChange={(_, value) => handleVideoUrlChange(value)}
+          onInputChange={(_, value) => setInputVideoUrl(value)}
+          freeSolo
+          disableClearable={true}
+          openOnFocus={true}
+        //   slotProps={{
+        //     input: {
+        //       onBlur: (e) => handleVideoUrlChange(e.target.value)
+        //     }
+        //   }}
         />
         <Button
           variant="solid"
-          onClick={handleVideoUrlChange}
-          disabled={inputVideoUrl === currentVideoUrl}
+          onClick={() => handleVideoUrlChange(inputVideoUrl)}
+          disabled={!inputVideoUrl || inputVideoUrl === currentVideoUrl}
         >
           Load Video
         </Button>

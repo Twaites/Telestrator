@@ -3,7 +3,7 @@ import VideoPlayer from './components/VideoPlayer.tsx'
 import SketchCanvas from './components/SketchCanvas.tsx'
 import SketchToolbar from './components/SketchToolbar.tsx'
 import VideoControls from './components/VideoControls.tsx'
-import { Grid, Stack } from '@mui/joy'
+import { Box, Grid, Stack } from '@mui/joy'
 
 function Telestrator() {
   return (
@@ -14,10 +14,10 @@ function Telestrator() {
       <Grid xs>
         <Stack spacing={1} padding={1}>
           <VideoControls />
-          <div id="ReactPlayerAndSketchWrapper">
+          <Box id="ReactPlayerAndSketchWrapper">
             <VideoPlayer />
             <SketchCanvas />
-          </div>
+          </Box>
         </Stack>
       </Grid>
     </Grid>

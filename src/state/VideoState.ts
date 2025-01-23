@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 interface VideoState {
   currentVideoUrl: string;
+  videoUrlHistory: string[];
   playbackSpeed: number;
   muted: boolean;
   playStatus: boolean;
@@ -9,6 +10,7 @@ interface VideoState {
   videoProgress: number;
   seeking: boolean;
   setVideoUrl: (url: string) => void;
+  addToUrlHistory: (url: string) => void;
   setPlaybackSpeed: (speed: number) => void;
   toggleMute: () => void;
   setPlayStatus: (status: boolean) => void;
@@ -19,6 +21,7 @@ interface VideoState {
 
 export const useVideoStore = create<VideoState>((set) => ({
   currentVideoUrl: 'https://www.youtube.com/watch?v=jfKfPfyJRdk',
+  videoUrlHistory: ['https://www.youtube.com/watch?v=jfKfPfyJRdk'],
   playbackSpeed: 1,
   muted: false,
   playStatus: false,
@@ -26,6 +29,9 @@ export const useVideoStore = create<VideoState>((set) => ({
   videoProgress: 0,
   seeking: false,
   setVideoUrl: (currentVideoUrl) => set({ currentVideoUrl }),
+  addToUrlHistory: (url) => set((state) => ({
+    videoUrlHistory: [...new Set([url, ...state.videoUrlHistory])].slice(0, 10)
+  })),
   setPlaybackSpeed: (playbackSpeed) => set({ playbackSpeed }),
   toggleMute: () => set((state) => ({ muted: !state.muted })),
   setPlayStatus: (playStatus) => set({ playStatus }),
