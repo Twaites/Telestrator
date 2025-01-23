@@ -75,6 +75,7 @@ const VideoControls = () => {
         <Autocomplete
           sx={{ 
             width: '100%',
+            py:0,
           }}
           placeholder="Enter video URL"
           value={currentVideoUrl}
@@ -86,9 +87,10 @@ const VideoControls = () => {
         />
         <Button
           variant="solid"
-          sx={{ bgcolor: '#2196f3' }}
+          sx={{ bgcolor: '#2196f3', minWidth: 110 }}
           onClick={() => handleVideoUrlChange(inputVideoUrl)}
           disabled={!inputVideoUrl || inputVideoUrl === currentVideoUrl}
+          size="sm"
         >
           Load Video
         </Button>
