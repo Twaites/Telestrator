@@ -1,13 +1,9 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Button, Slider, Stack, Autocomplete, IconButton } from '@mui/joy';
 import { useVideoStore } from '../state/VideoState';
 import { Play, Pause, Volume2, VolumeX, Settings } from 'lucide-react';
-
-const formatTime = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
-};
+import { formatTime } from '../utils/formatTime';
+import SpeedMenu from './SpeedMenu';
 
 const VideoControls = () => {
   const [inputVideoUrl, setInputVideoUrl] = useState('');
@@ -34,38 +30,45 @@ const VideoControls = () => {
     isLive
   } = useVideoStore();
 
-  const handleVideoUrlChange = (newUrl: string | null) => {
+  const handleVideoUrlChange = useCallback((newUrl: string | null) => {
     if (newUrl && newUrl !== currentVideoUrl) {
       setInputVideoUrl(newUrl);
       setVideoUrl(newUrl);
       addToUrlHistory(newUrl);
     }
-  };
+  }, [currentVideoUrl, setVideoUrl, addToUrlHistory]);
 
   const currentTime = (videoProgress / 1000) * duration;
 
-  const handleVolumeChange = (_: any, value: number | number[]) => {
+  const handleVolumeChange = useCallback((_: any, value: number | number[]) => {
     const newVolume = value as number;
     setVolumeLevel(newVolume);
     
-    // Auto mute/unmute based on volume level
     if (newVolume === 0 && !muted) {
       toggleMute();
     } else if (newVolume > 0 && muted) {
       toggleMute();
     }
-  };
+  }, [muted, setVolumeLevel, toggleMute]);
 
-  const handleSeek = (_: any, value: number | number[]) => {
+  const handleSeek = useCallback((_: SliderChangeEvent, value: SliderValue) => {
     setSeeking(true);
     setVideoProgress(value as number);
-  };
+  }, [setSeeking, setVideoProgress]);
 
-  const handleSeekCommitted = (_: any, value: number | number[]) => {
+  const handleSeekCommitted = useCallback((_: any, value: number | number[]) => {
     const seekTo = (value as number) / 1000;
     playerRef?.current?.seekTo(seekTo);
     setSeeking(false);
-  };
+  }, [playerRef, setSeeking]);
+
+  const handlePlayPause = useCallback(() => {
+    setPlayStatus(!playStatus);
+  }, [playStatus, setPlayStatus]);
+
+  const handleSpeedChange = useCallback((speed: number) => {
+    setPlaybackSpeed(speed);
+  }, [setPlaybackSpeed]);
 
   return (
     <Stack spacing={1} sx={{ width: '100%' }}>
@@ -122,7 +125,7 @@ const VideoControls = () => {
           <Stack direction="row" spacing={1} alignItems="center">
             <IconButton
               variant="plain"
-              onClick={() => setPlayStatus(!playStatus)}
+              onClick={handlePlayPause}
             >
               {playStatus ? <Pause size={20} /> : <Play size={20} />}
             </IconButton>
@@ -156,42 +159,10 @@ const VideoControls = () => {
             </Stack>
           </Stack>
 
-          <Stack direction="row" spacing={1} alignItems="center">
-            <Button
-              variant="plain"
-              startDecorator={<Settings size={18} />}
-              onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-              sx={{ color: '#fff' }}
-            >
-              {playbackSpeed}x
-            </Button>
-            {showSpeedMenu && (
-              <Stack
-                sx={{
-                  position: 'absolute',
-                  bottom: '100%',
-                  right: 0,
-                  bgcolor: 'background.body',
-                  borderRadius: 'sm',
-                  boxShadow: 'sm',
-                  p: 1,
-                }}
-              >
-                {[0.25, 0.5, 1, 1.5, 2].map((speed) => (
-                  <Button
-                    key={speed}
-                    variant={playbackSpeed === speed ? 'soft' : 'plain'}
-                    onClick={() => {
-                      setPlaybackSpeed(speed);
-                      setShowSpeedMenu(false);
-                    }}
-                  >
-                    {speed}x
-                  </Button>
-                ))}
-              </Stack>
-            )}
-          </Stack>
+          <SpeedMenu 
+            playbackSpeed={playbackSpeed}
+            onSpeedChange={handleSpeedChange}
+          />
         </Stack>
       </Stack>
     </Stack>

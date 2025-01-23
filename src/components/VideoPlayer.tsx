@@ -20,7 +20,15 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     setPlayerRef(playerRef);
+    return () => {
+      setPlayerRef(null);
+    };
   }, [setPlayerRef]);
+
+  const handleError = (error: any) => {
+    console.error('Video playback error:', error);
+    // You could add error state to VideoState and show an error message
+  };
 
   return (
     <ReactPlayer
@@ -41,7 +49,7 @@ export default function VideoPlayer() {
           setVideoProgress(e.played * 1000);
         }
       }}
-      onError={e => console.log('onError', e)}
+      onError={handleError}
       onDuration={(duration) => {
         setDuration(duration);
         setIsLive(duration === Infinity);
