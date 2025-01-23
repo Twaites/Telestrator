@@ -1,10 +1,36 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { SketchField } from 'react-sketch2';
 import { useSketchStore } from '../state/SketchState';
 
 export default function SketchCanvas() {
   const { currentTool, lineColor, lineWidth } = useSketchStore();
   const sketchRef = useRef<typeof SketchField>(null);
+  
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      if (event.shiftKey && (event.key === 'Delete' || event.key === 'Backspace')) {
+        sketchRef.current?.clear();
+      }
+      switch (event.code) {
+        case 'KeyZ':
+          if (event.ctrlKey || event.metaKey) {
+            sketchRef.current?.undo();
+          }
+          break;
+          case 'KeyY':
+            if (event.ctrlKey || event.metaKey) {
+              sketchRef.current?.redo();
+            }
+            break;
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
+
   return (
     <SketchField
       className='sketch-canvas'
@@ -16,5 +42,5 @@ export default function SketchCanvas() {
       lineWidth={lineWidth}
       ref={sketchRef}
     />
-  )
+  );
 }
