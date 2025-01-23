@@ -147,7 +147,7 @@ const VideoControls = () => {
               >
                 {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
               </IconButton>
-              <Box paddingRight={2}>
+              <Box paddingX={4}>
               <Slider
                 aria-label="Volume"
                 value={volumeLevel}

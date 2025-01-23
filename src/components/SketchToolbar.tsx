@@ -3,6 +3,7 @@ import { ButtonGroup, Button, Stack } from '@mui/joy';
 import { Pencil, Slash, Square, Circle } from 'lucide-react';
 import { useSketchStore } from '../state/SketchState';
 import ColorPicker from './ColorPicker';
+import { useEffect } from 'react';
 
 export default function SketchToolbar() {
   const { currentTool, setCurrentTool } = useSketchStore();
@@ -10,6 +11,35 @@ export default function SketchToolbar() {
   const getButtonVariant = (tool: string) => {
     return tool === currentTool ? 'solid' : 'soft';
   };
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Prevent handling if user is typing in input
+      if (e.target instanceof HTMLInputElement) return;
+
+      switch (e.key.toLowerCase()) {
+        case 'p':
+          e.preventDefault();
+          setCurrentTool(Tools.Pencil);
+          break;
+        case 'r':
+          e.preventDefault();
+          setCurrentTool(Tools.Rectangle);
+          break;
+        case 'c':
+          e.preventDefault();
+          setCurrentTool(Tools.Circle);
+          break;
+        case 'l':
+          e.preventDefault();
+          setCurrentTool(Tools.Line);
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [setCurrentTool]);
 
   return (
     <Stack spacing={2} padding={2}>
