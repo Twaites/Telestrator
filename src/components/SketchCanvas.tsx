@@ -8,16 +8,20 @@ export default function SketchCanvas() {
   
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
+      if (['ArrowLeft', 'ArrowRight'].includes(event.code)) {
+        event.preventDefault();
+      }
+
       if (event.shiftKey && (event.key === 'Delete' || event.key === 'Backspace')) {
         sketchRef.current?.clear();
       }
       switch (event.code) {
-        case 'KeyZ':
+        case 'ArrowLeft':
           if (event.ctrlKey || event.metaKey) {
             sketchRef.current?.undo();
           }
           break;
-          case 'KeyY':
+          case 'ArrowRight':
             if (event.ctrlKey || event.metaKey) {
               sketchRef.current?.redo();
             }
