@@ -1,19 +1,16 @@
-import { useRef } from 'react';
 import { SketchField } from 'react-sketch2';
 import { useSketchStore } from '../state/SketchState';
 
 export default function SketchCanvas() {
-  const _sketch = useRef<any>();
-  const { tool, lineColor, lineWidth } = useSketchStore();
+  const { currentTool, lineColor, lineWidth } = useSketchStore();
   
   return (
     <SketchField
       className='sketch-canvas'
       width='100%'
       height='100%'
-      ref={_sketch}
       undoSteps={500}
-      tool={tool}
+      tool={currentTool}
       lineColor={lineColor}
       lineWidth={lineWidth}
     />

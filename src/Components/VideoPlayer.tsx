@@ -3,7 +3,6 @@ import ReactPlayer from 'react-player';
 import { useVideoStore } from '../state/VideoState';
 
 export default function VideoPlayer() {
-  const _player = useRef<any>();
   const { 
     currentVideoUrl,
     playbackSpeed,
@@ -17,7 +16,6 @@ export default function VideoPlayer() {
   return (
     <ReactPlayer
       className='react-player'
-      ref={_player}
       playbackRate={playbackSpeed}
       muted={muted}
       controls={false}
