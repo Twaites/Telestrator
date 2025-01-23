@@ -11,12 +11,10 @@ export default function VideoPlayer() {
     playStatus,
     volumeLevel,
     seeking,
-    videoProgress,
     setPlayStatus,
     setVideoProgress,
     setDuration,
     setIsLive,
-    setSeeking,
     setPlayerRef
   } = useVideoStore();
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Grid, Slider, Stack, Autocomplete, IconButton } from '@mui/joy';
+import { Button, Slider, Stack, Autocomplete, IconButton } from '@mui/joy';
 import { useVideoStore } from '../state/VideoState';
 import { Play, Pause, Volume2, VolumeX, Settings } from 'lucide-react';
 
