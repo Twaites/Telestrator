@@ -8,10 +8,6 @@ export default function SketchCanvas() {
   
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (['ArrowLeft', 'ArrowRight'].includes(event.code)) {
-        event.preventDefault();
-      }
-
       if (event.shiftKey && (event.key === 'Delete' || event.key === 'Backspace')) {
         sketchRef.current?.clear();
       }
