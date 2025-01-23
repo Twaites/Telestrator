@@ -13,25 +13,31 @@ export default function SketchToolbar() {
   };
 
   useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      // Prevent handling if user is typing in input
-      if (e.target instanceof HTMLInputElement) return;
 
-      switch (e.key.toLowerCase()) {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Prevent handling if user is typing in input
+      if (event.target instanceof HTMLInputElement) return;
+
+      // Ignore if any modifier keys are pressed
+      if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
+        return;
+      }
+
+      switch (event.key.toLowerCase()) {
         case 'p':
-          e.preventDefault();
+          event.preventDefault();
           setCurrentTool(Tools.Pencil);
           break;
         case 'r':
-          e.preventDefault();
+          event.preventDefault();
           setCurrentTool(Tools.Rectangle);
           break;
         case 'c':
-          e.preventDefault();
+          event.preventDefault();
           setCurrentTool(Tools.Circle);
           break;
         case 'l':
-          e.preventDefault();
+          event.preventDefault();
           setCurrentTool(Tools.Line);
           break;
       }

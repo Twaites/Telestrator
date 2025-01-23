@@ -15,7 +15,10 @@ export default function VideoPlayer() {
     setVideoProgress,
     setDuration,
     setIsLive,
-    setPlayerRef
+    setPlayerRef,
+    setPlaybackSpeed,
+    setVolumeLevel,
+    toggleMute
   } = useVideoStore();
 
   useEffect(() => {
@@ -24,6 +27,55 @@ export default function VideoPlayer() {
       setPlayerRef(null);
     };
   }, [setPlayerRef]);
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      // Prevent default behavior for these keys
+      if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) {
+        event.preventDefault();
+      }
+
+      // Ignore if any modifier keys are pressed
+      if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
+        return;
+      }
+
+      switch (event.code) {
+        
+        // Play/Pause - Space or K
+        case 'Space':
+        case 'KeyK':
+          setPlayStatus(!playStatus);
+          break;
+
+        // Speed controls - Left/Right arrows
+        case 'ArrowLeft':
+          setPlaybackSpeed(Math.max(0.25, playbackSpeed - 0.25));
+          break;
+        case 'ArrowRight':
+          setPlaybackSpeed(Math.min(1, playbackSpeed + 0.25));
+          break;
+
+        // Volume controls - Up/Down arrows
+        case 'ArrowUp':
+          setVolumeLevel(Math.min(1, volumeLevel + 0.1));
+          break;
+        case 'ArrowDown':
+          setVolumeLevel(Math.max(0, volumeLevel - 0.1));
+          break;
+
+        // Mute - M
+        case 'KeyM':
+          toggleMute();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [playStatus, playbackSpeed, volumeLevel, setPlayStatus, setPlaybackSpeed, setVolumeLevel, toggleMute]);
 
   const handleError = (error: any) => {
     console.error('Video playback error:', error);
