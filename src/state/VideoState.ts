@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import ReactPlayer from 'react-player';
 
 interface VideoState {
   currentVideoUrl: string;
@@ -9,6 +10,9 @@ interface VideoState {
   volumeLevel: number;
   videoProgress: number;
   seeking: boolean;
+  duration: number;
+  isLive: boolean;
+  playerRef: React.RefObject<ReactPlayer> | null;
   setVideoUrl: (url: string) => void;
   addToUrlHistory: (url: string) => void;
   setPlaybackSpeed: (speed: number) => void;
@@ -17,6 +21,9 @@ interface VideoState {
   setVolumeLevel: (level: number) => void;
   setVideoProgress: (progress: number) => void;
   setSeeking: (seeking: boolean) => void;
+  setDuration: (duration: number) => void;
+  setIsLive: (isLive: boolean) => void;
+  setPlayerRef: (ref: React.RefObject<ReactPlayer>) => void;
 }
 
 export const useVideoStore = create<VideoState>((set) => ({
@@ -28,6 +35,9 @@ export const useVideoStore = create<VideoState>((set) => ({
   volumeLevel: 0.5,
   videoProgress: 0,
   seeking: false,
+  duration: 0,
+  isLive: false,
+  playerRef: null,
   setVideoUrl: (currentVideoUrl) => set({ currentVideoUrl }),
   addToUrlHistory: (url) => set((state) => ({
     videoUrlHistory: [...new Set([url, ...state.videoUrlHistory])].slice(0, 10)
@@ -38,4 +48,7 @@ export const useVideoStore = create<VideoState>((set) => ({
   setVolumeLevel: (volumeLevel) => set({ volumeLevel }),
   setVideoProgress: (videoProgress) => set({ videoProgress }),
   setSeeking: (seeking) => set({ seeking }),
+  setDuration: (duration) => set({ duration }),
+  setIsLive: (isLive) => set({ isLive }),
+  setPlayerRef: (playerRef) => set({ playerRef }),
 })); 

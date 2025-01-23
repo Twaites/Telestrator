@@ -1,19 +1,32 @@
+import { useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useVideoStore } from '../state/VideoState';
 
 export default function VideoPlayer() {
+  const playerRef = useRef<ReactPlayer>(null);
   const { 
     currentVideoUrl,
     playbackSpeed,
     muted,
     playStatus,
     volumeLevel,
+    seeking,
+    videoProgress,
     setPlayStatus,
-    setVideoProgress
+    setVideoProgress,
+    setDuration,
+    setIsLive,
+    setSeeking,
+    setPlayerRef
   } = useVideoStore();
+
+  useEffect(() => {
+    setPlayerRef(playerRef);
+  }, [setPlayerRef]);
 
   return (
     <ReactPlayer
+      ref={playerRef}
       className='react-player'
       playbackRate={playbackSpeed}
       muted={muted}
@@ -25,8 +38,16 @@ export default function VideoPlayer() {
       onPause={() => setPlayStatus(false)}
       onEnded={() => setPlayStatus(false)}
       volume={volumeLevel}
-      onProgress={e => setVideoProgress(e.played * 1000)}
+      onProgress={e => {
+        if (!seeking) {
+          setVideoProgress(e.played * 1000);
+        }
+      }}
       onError={e => console.log('onError', e)}
+      onDuration={(duration) => {
+        setDuration(duration);
+        setIsLive(duration === Infinity);
+      }}
     />
   );
 }
