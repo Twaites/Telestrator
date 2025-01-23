@@ -9,20 +9,18 @@ interface SketchState {
   setCurrentTool: (tool: string) => void;
   setLineColor: (color: string) => void;
   setLineWidth: (width: number) => void;
-  updateColorHistory: (color: string) => void;
+  addUsedColor: (color: string) => void;
 }
 
 export const useSketchStore = create<SketchState>((set) => ({
   currentTool: Tools.Pencil,
-  lineColor: '#73dbde',
+  lineColor: 'red',
   lineWidth: 3,
   colorHistory: [],
   setCurrentTool: (tool) => set({ currentTool: tool }),
   setLineColor: (lineColor) => set({ lineColor }),
   setLineWidth: (lineWidth) => set({ lineWidth }),
-  updateColorHistory: (color) => set((state) => ({
-    colorHistory: state.colorHistory.includes(color) 
-      ? state.colorHistory 
-      : [color, ...state.colorHistory.slice(0, 8)]
+  addUsedColor: (color) => set((state) => ({
+    colorHistory: [...new Set([color, ...state.colorHistory])].slice(0, 8)
   })),
 })); 
