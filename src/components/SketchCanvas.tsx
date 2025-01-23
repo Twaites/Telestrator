@@ -5,7 +5,7 @@ import { useSketchStore } from '../state/SketchState';
 export default function SketchCanvas() {
   const { currentTool, lineColor, lineWidth } = useSketchStore();
   const sketchRef = useRef<typeof SketchField>(null);
-  
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
       if (event.shiftKey && (event.key === 'Delete' || event.key === 'Backspace')) {
@@ -17,14 +17,14 @@ export default function SketchCanvas() {
             sketchRef.current?.undo();
           }
           break;
-          case 'ArrowRight':
-            if (event.shiftKey) {
-              sketchRef.current?.redo();
-            }
-            break;
+        case 'ArrowRight':
+          if (event.shiftKey) {
+            sketchRef.current?.redo();
+          }
+          break;
       }
     };
-    
+
     window.addEventListener('keydown', handleKeyPress);
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
@@ -34,8 +34,6 @@ export default function SketchCanvas() {
   return (
     <SketchField
       className='sketch-canvas'
-      width='100%'
-      height='100%'
       undoSteps={500}
       tool={currentTool}
       lineColor={lineColor}
