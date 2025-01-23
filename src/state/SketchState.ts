@@ -14,13 +14,13 @@ interface SketchState {
 
 export const useSketchStore = create<SketchState>((set) => ({
   currentTool: Tools.Pencil,
-  lineColor: 'red',
+  lineColor: '#ff0000',
   lineWidth: 3,
   colorHistory: [],
   setCurrentTool: (tool) => set({ currentTool: tool }),
   setLineColor: (lineColor) => set({ lineColor }),
   setLineWidth: (lineWidth) => set({ lineWidth }),
   addUsedColor: (color) => set((state) => ({
-    colorHistory: [...new Set([color, ...state.colorHistory])].slice(0, 8)
+    colorHistory: [...new Set([color, ...state.colorHistory])].slice(0, 7)
   })),
 })); 
