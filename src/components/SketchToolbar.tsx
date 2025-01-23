@@ -23,22 +23,22 @@ export default function SketchToolbar() {
         return;
       }
 
-      switch (event.key.toLowerCase()) {
-        case 'p':
+      switch (event.key) {
+        case '1':
           event.preventDefault();
           setCurrentTool(Tools.Pencil);
           break;
-        case 'r':
+        case '2':
+          event.preventDefault();
+          setCurrentTool(Tools.Line);
+          break;
+        case '3':
           event.preventDefault();
           setCurrentTool(Tools.Rectangle);
           break;
-        case 'c':
+        case '4':
           event.preventDefault();
           setCurrentTool(Tools.Circle);
-          break;
-        case 'l':
-          event.preventDefault();
-          setCurrentTool(Tools.Line);
           break;
       }
     };
