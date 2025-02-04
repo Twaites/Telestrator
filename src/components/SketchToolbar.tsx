@@ -1,5 +1,5 @@
 import { Tools } from 'react-sketch2';
-import { ButtonGroup, Button, Stack, Typography, Divider, Tooltip, Link, IconButton } from '@mui/joy';
+import { ButtonGroup, Button, Stack, Typography, Divider, Tooltip, Link } from '@mui/joy';
 import { Pencil, Slash, Square, Circle, Github, ChevronDown, ChevronUp } from 'lucide-react';
 import { useSketchStore } from '../state/SketchState';
 import ColorPicker from './ColorPicker';
@@ -117,42 +117,50 @@ export default function SketchToolbar() {
             }
           }}
         >
-          <Button
-            variant={getButtonVariant(Tools.Pencil)}
-            onClick={() => setCurrentTool(Tools.Pencil)}
-            color="primary"
-          >
-            <Stack spacing={1} alignItems="center">
-              <Pencil size={20} />
-            </Stack>
-          </Button>
-          <Button
-            variant={getButtonVariant(Tools.Line)}
-            onClick={() => setCurrentTool(Tools.Line)}
-            color="primary"
-          >
-            <Stack spacing={1} alignItems="center">
-              <Slash size={20} />
-            </Stack>
-          </Button>
-          <Button
-            variant={getButtonVariant(Tools.Rectangle)}
-            onClick={() => setCurrentTool(Tools.Rectangle)}
-            color="primary"
-          >
-            <Stack spacing={1} alignItems="center">
-              <Square size={20} />
-            </Stack>
-          </Button>
-          <Button
-            variant={getButtonVariant(Tools.Circle)}
-            onClick={() => setCurrentTool(Tools.Circle)}
-            color="primary"
-          >
-            <Stack spacing={1} alignItems="center">
-              <Circle size={20} />
-            </Stack>
-          </Button>
+          <Tooltip title="Pencil (1)" placement="top">
+            <Button
+              variant={getButtonVariant(Tools.Pencil)}
+              onClick={() => setCurrentTool(Tools.Pencil)}
+              color="primary"
+            >
+              <Stack spacing={1} alignItems="center">
+                <Pencil size={20} />
+              </Stack>
+            </Button>
+          </Tooltip>
+          <Tooltip title="Line (2)" placement="top">
+            <Button
+              variant={getButtonVariant(Tools.Line)}
+              onClick={() => setCurrentTool(Tools.Line)}
+              color="primary"
+            >
+              <Stack spacing={1} alignItems="center">
+                <Slash size={20} />
+              </Stack>
+            </Button>
+          </Tooltip>
+          <Tooltip title="Rectangle (3)" placement="top">
+            <Button
+              variant={getButtonVariant(Tools.Rectangle)}
+              onClick={() => setCurrentTool(Tools.Rectangle)}
+              color="primary"
+            >
+              <Stack spacing={1} alignItems="center">
+                <Square size={20} />
+              </Stack>
+            </Button>
+          </Tooltip>
+          <Tooltip title="Circle (4)" placement="top">
+            <Button
+              variant={getButtonVariant(Tools.Circle)}
+              onClick={() => setCurrentTool(Tools.Circle)}
+              color="primary"
+            >
+              <Stack spacing={1} alignItems="center">
+                <Circle size={20} />
+              </Stack>
+            </Button>
+          </Tooltip>
         </ButtonGroup>
         </Stack>
         {/* Undo/Redo/Clear Section */}
@@ -165,40 +173,46 @@ export default function SketchToolbar() {
           }}
         >
           <Stack direction="row">
+            <Tooltip title="Undo (Ctrl/Cmd + Z)" placement="top">
+              <Button 
+                variant="plain" 
+                color="primary"
+                sx={{ 
+                  flex: 1, 
+                  borderRight: '1px solid', 
+                  borderColor: 'divider',
+                  borderRadius: 0,
+                }}
+              >
+                Undo
+              </Button>
+            </Tooltip>
+            <Tooltip title="Redo (Ctrl/Cmd + Shift + Z)" placement="top">
+              <Button 
+                variant="plain" 
+                color="primary"
+                sx={{ 
+                  flex: 1, 
+                  borderRadius: 0,
+                }}
+              >
+                Redo
+              </Button>
+            </Tooltip>
+          </Stack>
+          <Tooltip title="Clear (Shift + Delete)" placement="bottom">
             <Button 
               variant="plain" 
               color="primary"
               sx={{ 
-                flex: 1, 
-                borderRight: '1px solid', 
+                borderTop: '1px solid', 
                 borderColor: 'divider',
                 borderRadius: 0,
               }}
             >
-              Undo
+              Clear
             </Button>
-            <Button 
-              variant="plain" 
-              color="primary"
-              sx={{ 
-                flex: 1, 
-                borderRadius: 0,
-              }}
-            >
-              Redo
-            </Button>
-          </Stack>
-          <Button 
-            variant="plain" 
-            color="primary"
-            sx={{ 
-              borderTop: '1px solid', 
-              borderColor: 'divider',
-              borderRadius: 0,
-            }}
-          >
-            Clear
-          </Button>
+          </Tooltip>
         </Stack>
 
         {/* Collapsible Key Bindings Section */}

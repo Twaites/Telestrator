@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Button, Slider, Stack, Autocomplete, IconButton, Box } from '@mui/joy';
+import { Button, Slider, Stack, Autocomplete, IconButton, Box, Tooltip } from '@mui/joy';
 import { useVideoStore } from '../state/VideoState';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { formatTime } from '../utils/formatTime';
@@ -104,13 +104,15 @@ const VideoControls = () => {
           justifyContent="space-between"
         >
           <Stack direction="row" spacing={1} alignItems="center" sx={{ flex: 1 }}>
-            <IconButton
-              variant="plain"
-              onClick={handlePlayPause}
-              color="primary"
-            >
-              {playStatus ? <Pause size={20} /> : <Play size={20} />}
-            </IconButton>
+            <Tooltip title={playStatus ? "Pause (k)" : "Play (k)"}>
+              <IconButton
+                variant="plain"
+                onClick={handlePlayPause}
+                color="primary"
+              >
+                {playStatus ? <Pause size={20} /> : <Play size={20} />}
+              </IconButton>
+            </Tooltip>
 
             {!isLive && (
               <Slider
@@ -146,14 +148,16 @@ const VideoControls = () => {
             />
 
             <Stack direction="row" spacing={1} alignItems="center">
-              <IconButton
-                variant="plain"
-                onClick={toggleMute}
-                color="primary"
-              >
-                {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-              </IconButton>
-              <Box paddingX={4}>
+              <Tooltip title={muted ? "Unmute (M)" : "Mute (M)"}>
+                <IconButton
+                  variant="plain"
+                  onClick={toggleMute}
+                  color="primary"
+                >
+                  {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                </IconButton>
+              </Tooltip>
+              <Box paddingX={1}>
               <Slider
                 aria-label="Volume"
                 value={volumeLevel}
@@ -163,7 +167,8 @@ const VideoControls = () => {
                 min={0}
                 max={1}
                 sx={{ 
-                  width: 100,
+                  width: 150,
+                  pl: 0,
                 }}
                 size="sm"
                 color="primary"
