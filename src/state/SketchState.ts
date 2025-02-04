@@ -16,11 +16,11 @@ export const useSketchStore = create<SketchState>((set) => ({
   currentTool: Tools.Pencil,
   lineColor: '#ff0000',
   lineWidth: 3,
-  colorHistory: [],
+  colorHistory: ['#ff0000'],
   setCurrentTool: (tool) => set({ currentTool: tool }),
   setLineColor: (lineColor) => set({ lineColor }),
   setLineWidth: (lineWidth) => set({ lineWidth }),
   addUsedColor: (color) => set((state) => ({
-    colorHistory: [...new Set([color, ...state.colorHistory])].slice(0, 7)
+    colorHistory: [...new Set([color, ...state.colorHistory])].slice(-7)
   })),
 })); 

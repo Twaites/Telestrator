@@ -15,7 +15,8 @@
 
 .color-history-picker {
     display: flex;
-    padding: 12px;
+    padding: 7px;
+    margin: 10px auto;
     flex-wrap: wrap;
 }
 
@@ -25,7 +26,7 @@
     margin: 2px;
     border: none;
     padding: 0;
-    border-radius: 2px;
+    border-radius: 1px;
     cursor: pointer;
     outline: none;
 }
