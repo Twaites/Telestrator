@@ -12,7 +12,6 @@ function Telestrator() {
       spacing={0} 
       sx={{ 
         flexGrow: 1, 
-        bgcolor: '#000',
         height: '100vh'
       }}
     >

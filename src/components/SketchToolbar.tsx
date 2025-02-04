@@ -48,15 +48,22 @@ export default function SketchToolbar() {
   }, [setCurrentTool]);
 
   return (
-    <Stack spacing={2} sx={{ width: '100%', maxWidth: 300, margin: '0 auto', p: 2, bgcolor: '#1a1a1a' }}>
+    <Stack 
+      spacing={2} 
+      sx={{ 
+        width: '100%',
+        height: '100%',
+        p: 2,
+        boxSizing: 'border-box'
+      }}
+    >
       {/* Color Picker Section */}
       <Stack 
         sx={{ 
           border: '1px solid',
-          borderColor: '#2a2a2a',
+          borderColor: 'divider',
           borderRadius: 1,
           p: 2,
-          bgcolor: '#2a2a2a'
         }}
       >
         <ColorPicker />
@@ -67,14 +74,9 @@ export default function SketchToolbar() {
         sx={{ 
           display: 'flex', 
           justifyContent: 'space-between',
-          bgcolor: '#2a2a2a',
           '& .MuiButton-root': {
             flex: 1,
             borderRadius: 0,
-            color: '#fff',
-            '&:hover': {
-              bgcolor: 'rgba(255, 255, 255, 0.1)',
-            },
           }
         }}
       >
@@ -120,10 +122,9 @@ export default function SketchToolbar() {
       <Stack 
         sx={{ 
           border: '1px solid',
-          borderColor: '#2a2a2a',
+          borderColor: 'divider',
           borderRadius: 2,
           overflow: 'hidden',
-          bgcolor: '#2a2a2a'
         }}
       >
         <Stack direction="row">
@@ -133,12 +134,8 @@ export default function SketchToolbar() {
             sx={{ 
               flex: 1, 
               borderRight: '1px solid', 
-              borderColor: '#1a1a1a',
+              borderColor: 'divider',
               borderRadius: 0,
-              color: '#fff',
-              '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.1)',
-              }
             }}
           >
             Undo
@@ -149,10 +146,6 @@ export default function SketchToolbar() {
             sx={{ 
               flex: 1, 
               borderRadius: 0,
-              color: '#fff',
-              '&:hover': {
-                bgcolor: 'rgba(255, 255, 255, 0.1)',
-              }
             }}
           >
             Redo
@@ -163,12 +156,8 @@ export default function SketchToolbar() {
           color="primary"
           sx={{ 
             borderTop: '1px solid', 
-            borderColor: '#1a1a1a',
+            borderColor: 'divider',
             borderRadius: 0,
-            color: '#fff',
-            '&:hover': {
-              bgcolor: 'rgba(255, 255, 255, 0.1)',
-            }
           }}
         >
           Clear

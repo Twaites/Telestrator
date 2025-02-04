@@ -70,7 +70,7 @@ const VideoControls = () => {
   }, [setPlaybackSpeed]);
 
   return (
-    <Stack spacing={1} sx={{ width: '100%', bgcolor: '#1a1a1a', p: 1}}>
+    <Stack spacing={1} sx={{ width: '100%', p: 1}}>
       <Stack direction="row" spacing={1}>
         <Autocomplete
           sx={{ 
@@ -96,7 +96,7 @@ const VideoControls = () => {
         </Button>
       </Stack>
 
-      <Stack spacing={0.5} sx={{ bgcolor: '#2a2a2a', p:0, borderRadius: '4px' }}>
+      <Stack spacing={0.5} sx={{ p: 0, borderRadius: '4px' }}>
         <Stack 
           direction="row" 
           spacing={2} 
@@ -130,7 +130,13 @@ const VideoControls = () => {
               />
             )}
 
-            <span style={{ fontFamily: 'sans-serif', fontSize: '0.875rem', color: '#fff', minWidth: 100, textAlign: 'center', paddingLeft: 10 }}>
+            <span style={{ 
+              fontFamily: 'sans-serif', 
+              fontSize: '0.875rem', 
+              minWidth: 100, 
+              textAlign: 'center', 
+              paddingLeft: 10 
+            }}>
               {isLive ? 'LIVE' : `${formatTime(currentTime)} / ${formatTime(duration)}`}
             </span>
 
