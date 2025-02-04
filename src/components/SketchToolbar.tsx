@@ -223,8 +223,10 @@ export default function SketchToolbar() {
               p: 1.5,
               borderRadius: 0,
               '&:hover': {
-                bgcolor: 'background.level1'
-              }
+                bgcolor: 'background.level1',
+              },
+              borderBottom: '1px solid',
+              borderColor: 'divider',
             }}
           >
             <Typography level="title-sm">Keyboard Shortcuts</Typography>
@@ -266,7 +268,6 @@ export default function SketchToolbar() {
           </Stack>
 
           {/* Source Code Link - Always Visible */}
-          <Divider sx={{ m: 0 }} />
           <Link
             href="https://github.com/Twaites/Telestrator"
             target="_blank"
@@ -278,7 +279,13 @@ export default function SketchToolbar() {
               gap: 1,
               color: 'neutral.500',
               textDecoration: 'none',
-              p: 1.5,
+              pl: 1.5,
+              pb: 1.5,
+              ...(isKeybindsOpen && {
+                borderTop: '1px solid',
+                borderColor: 'divider',
+                pt: 1.5,
+              }),
               '&:hover': {
                 color: 'primary.main',
                 textDecoration: 'underline'
