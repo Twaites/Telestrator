@@ -74,7 +74,7 @@ export default function SketchToolbar() {
               fontSize: '2rem',
               fontWeight: 400,
               letterSpacing: '0.02em',
-              mb: -1.5,
+              mb: -1.25,
               mt:0,
               textAlign: 'center'
             }}
@@ -88,7 +88,7 @@ export default function SketchToolbar() {
               fontWeight: 300,
               letterSpacing: '0.02em',
               textAlign: 'right',
-              pr: 2
+              pr: 5 
             }}
           >
             by Twaites
