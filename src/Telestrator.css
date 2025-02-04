@@ -35,7 +35,7 @@ body {
 
 .color-history-picker {
     display: flex;
-    padding: 7px;
+    padding: 2px;
     margin: 10px auto;
     flex-wrap: wrap;
 }
