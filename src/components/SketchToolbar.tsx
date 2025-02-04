@@ -6,7 +6,7 @@ import ColorPicker from './ColorPicker';
 import { useEffect, useState } from 'react';
 
 export default function SketchToolbar() {
-  const { currentTool, setCurrentTool } = useSketchStore();
+  const { currentTool, setCurrentTool, sketchRef } = useSketchStore();
   const [isKeybindsOpen, setIsKeybindsOpen] = useState(false);
 
   const getButtonVariant = (tool: string) => {
@@ -178,6 +178,7 @@ export default function SketchToolbar() {
               <Button 
                 variant="plain" 
                 color="primary"
+                onClick={() => sketchRef?.current?.undo()}
                 sx={{ 
                   flex: 1, 
                   borderRight: '1px solid', 
@@ -192,6 +193,7 @@ export default function SketchToolbar() {
               <Button 
                 variant="plain" 
                 color="primary"
+                onClick={() => sketchRef?.current?.redo()}
                 sx={{ 
                   flex: 1, 
                   borderRadius: 0,
@@ -205,6 +207,7 @@ export default function SketchToolbar() {
             <Button 
               variant="plain" 
               color="primary"
+              onClick={() => sketchRef?.current?.clear()}
               sx={{ 
                 borderTop: '1px solid', 
                 borderColor: 'divider',
