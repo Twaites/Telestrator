@@ -34,6 +34,8 @@ export default function SketchCanvas() {
   return (
     <SketchField
       className='sketch-canvas'
+      width="100%"
+      height="100%"
       undoSteps={500}
       tool={currentTool}
       lineColor={lineColor}
