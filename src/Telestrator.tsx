@@ -12,7 +12,7 @@ function Telestrator() {
         <SketchToolbar />
       </Grid>
       <Grid xs>
-        <Stack spacing={0} padding={1}>
+        <Stack spacing={0} paddingRight={1}>
           <Box paddingRight={2}>
           <VideoControls />
           </Box>
