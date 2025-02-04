@@ -52,29 +52,29 @@ export default function SketchToolbar() {
     <Stack 
       spacing={0} 
       sx={{ 
-        width: '100%',
+        width: '250px',
         height: '100%',
-        p: 2,
+        p: 1.5,
         boxSizing: 'border-box',
         display: 'flex'
       }}
     >
       {/* Fixed Tools Section */}
-      <Stack spacing={3} sx={{ flexShrink: 0 }}>
+      <Stack spacing={2} sx={{ flexShrink: 0 }}>
         {/* Title Section */}
         <Stack 
           spacing={0} 
           sx={{ 
-            mb: 1
+            mb: 0.5
           }}
         >
           <Typography
             level="h1"
             sx={{
-              fontSize: '2.5rem',
+              fontSize: '2rem',
               fontWeight: 400,
               letterSpacing: '0.02em',
-              mb: -1.75,
+              mb: -1.5,
               mt:0,
               textAlign: 'center'
             }}
@@ -84,11 +84,11 @@ export default function SketchToolbar() {
           <Typography
             level="title-lg"
             sx={{
-              fontSize: '1.2rem',
+              fontSize: '1rem',
               fontWeight: 300,
               letterSpacing: '0.02em',
               textAlign: 'right',
-              pr: 4  // Add some padding from the right edge
+              pr: 2
             }}
           >
             by Twaites
@@ -101,8 +101,9 @@ export default function SketchToolbar() {
             border: '1px solid',
             borderColor: 'divider',
             borderRadius: 1,
-            p: 2,
+            p: 1.5,
           }}
+          alignItems="center"
         >
           <ColorPicker />
 
