@@ -1,6 +1,5 @@
 import { HexColorPicker } from "react-colorful";
 import { useSketchStore } from '../state/SketchState';
-import './ColorPicker.css';
 
 const ColorPicker = () => {
     const { lineColor, setLineColor, colorHistory, addUsedColor } = useSketchStore();

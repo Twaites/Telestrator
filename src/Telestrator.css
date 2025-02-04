@@ -8,6 +8,49 @@ body {
     min-height: 360px;
 }
 
-.react-player {
-    float: right;
+/* Color Picker Styles */
+.color-picker-wrapper .react-colorful {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto;
+    border-radius: 0;
 }
+
+.color-picker-wrapper .react-colorful__saturation {
+    border-radius: 0;
+}
+
+.color-picker-wrapper .react-colorful__hue {
+    border-radius: 0;
+}
+
+.color-history-picker {
+    display: flex;
+    padding: 7px;
+    margin: 10px auto;
+    flex-wrap: wrap;
+}
+
+.previous-color {
+    width: 24px;
+    height: 24px;
+    margin: 2px;
+    border: none;
+    padding: 0;
+    border-radius: 1px;
+    cursor: pointer;
+    outline: none;
+}
+
+.color-picker-wrapper .react-colorful__saturation-pointer {
+    width: 16px;
+    height: 16px;
+    border-radius: 1px;
+    border-width: 2px;
+}
+
+.color-picker-wrapper .react-colorful__hue-pointer {
+    width: 15px;
+    border-radius: 2px;
+    border-width: 2px;
+} 
