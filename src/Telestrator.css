@@ -1,6 +1,8 @@
 body {
     margin: 0;
     overflow: hidden;
+    background-color: #121212;  /* Match the theme's body background */
+    color: #fff;               /* Ensure text is visible on dark background */
 }
 
 #ReactPlayerAndSketchWrapper {
@@ -39,9 +41,9 @@ body {
 }
 
 .previous-color {
-    width: 22px;
-    height: 22px;
-    margin: 1px;
+    width: 24px;
+    height: 24px;
+    margin: 2px;
     border: none;
     padding: 0;
     border-radius: 1px;
