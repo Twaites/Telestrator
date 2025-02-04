@@ -174,7 +174,7 @@ export default function SketchToolbar() {
           p: 2,
         }}
       >
-        <Typography level="title-sm">Sketch Controls</Typography>
+        <Typography level="title-md">Sketch Controls</Typography>
         <Stack spacing={0.5}>
           <Typography level="body-sm"><strong>1</strong> - pencil</Typography>
           <Typography level="body-sm"><strong>2</strong> - line</Typography>
@@ -187,7 +187,7 @@ export default function SketchToolbar() {
 
         <Divider />
 
-        <Typography level="title-sm">Video Controls</Typography>
+        <Typography level="title-md">Video Controls</Typography>
         <Stack spacing={0.5}>
           <Typography level="body-sm"><strong>j</strong> - speed down 25%</Typography>
           <Typography level="body-sm"><strong>k</strong> - play/pause</Typography>

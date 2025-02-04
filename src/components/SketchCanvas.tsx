@@ -19,7 +19,7 @@ export default function SketchCanvas() {
       // Support both Ctrl (Windows) and Cmd (Mac)
       const isModifierKey = event.ctrlKey || event.metaKey;
 
-      if (event.shiftKey && event.key === 'Delete') {
+      if (event.shiftKey && (event.key === 'Delete' || event.key === 'Backspace')) {
         sketchRef.current?.clear();
         return;
       }
