@@ -50,7 +50,7 @@ export default function SketchToolbar() {
 
   return (
     <Stack 
-      spacing={2} 
+      spacing={0} 
       sx={{ 
         width: '100%',
         height: '100%',
@@ -60,7 +60,7 @@ export default function SketchToolbar() {
       }}
     >
       {/* Fixed Tools Section */}
-      <Stack spacing={2} sx={{ flexShrink: 0 }}>
+      <Stack spacing={3} sx={{ flexShrink: 0 }}>
         {/* Title Section */}
         <Stack 
           spacing={0} 
@@ -74,7 +74,8 @@ export default function SketchToolbar() {
               fontSize: '2.5rem',
               fontWeight: 400,
               letterSpacing: '0.02em',
-              mb: -1,
+              mb: -1.75,
+              mt:0,
               textAlign: 'center'
             }}
           >
