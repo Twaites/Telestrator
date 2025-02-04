@@ -1,5 +1,5 @@
 import { Tools } from 'react-sketch2';
-import { ButtonGroup, Button, Stack, Typography, Divider, Tooltip, Link } from '@mui/joy';
+import { ButtonGroup, Button, Stack, Typography, Divider, Tooltip, Link, Box } from '@mui/joy';
 import { Pencil, Slash, Square, Circle, Github, ChevronDown, ChevronUp } from 'lucide-react';
 import { useSketchStore } from '../state/SketchState';
 import ColorPicker from './ColorPicker';
@@ -53,13 +53,14 @@ export default function SketchToolbar() {
       spacing={0} 
       sx={{ 
         width: '250px',
-        height: '100%',
+        height: '100vh',
         p: 1.5,
         boxSizing: 'border-box',
-        display: 'flex'
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      {/* Fixed Tools Section */}
+      {/* Main Tools Section - Will stay at top */}
       <Stack spacing={2} sx={{ flexShrink: 0 }}>
         {/* Title Section */}
         <Stack 
@@ -219,102 +220,104 @@ export default function SketchToolbar() {
             </Button>
           </Tooltip>
         </Stack>
+      </Stack>
 
-        {/* Collapsible Key Bindings Section */}
-        <Stack 
-          spacing={1}
-          sx={{ 
-            border: '1px solid',
+      {/* Spacer to push keybinds to bottom */}
+      <Box sx={{ flexGrow: 1 }} />
+
+      {/* Keybinds Section - At bottom, scrollable */}
+      <Stack 
+        spacing={1}
+        sx={{ 
+          border: '1px solid',
+          borderColor: 'divider',
+          borderRadius: 2,
+          overflow: 'hidden',
+          mt: 2,
+        }}
+      >
+        {/* Keybinds Header - Stays fixed */}
+        <Button
+          variant="plain"
+          color="neutral"
+          onClick={() => setIsKeybindsOpen(!isKeybindsOpen)}
+          endDecorator={isKeybindsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          sx={{
+            justifyContent: 'space-between',
+            p: 1.5,
+            borderRadius: 0,
+            '&:hover': {
+              bgcolor: 'background.level1',
+            },
+            borderBottom: '1px solid',
             borderColor: 'divider',
-            borderRadius: 2,
-            overflow: 'hidden',
-            flexGrow: 1,
           }}
         >
-          {/* Keybinds Header */}
-          <Button
-            variant="plain"
-            color="neutral"
-            onClick={() => setIsKeybindsOpen(!isKeybindsOpen)}
-            endDecorator={isKeybindsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            sx={{
-              justifyContent: 'space-between',
-              p: 1.5,
-              borderRadius: 0,
-              '&:hover': {
-                bgcolor: 'background.level1',
-              },
-              borderBottom: '1px solid',
-              borderColor: 'divider',
-            }}
-          >
-            <Typography level="title-sm">Keyboard Shortcuts</Typography>
-          </Button>
+          <Typography level="title-sm">Keyboard Shortcuts</Typography>
+        </Button>
 
-          {/* Collapsible Content */}
-          <Stack
-            spacing={1}
-            sx={{
-              height: isKeybindsOpen ? 'auto' : 0,
-              overflow: 'hidden',
-              transition: 'height 0.2s ease',
-              px: 2,
-              pb: isKeybindsOpen ? 2 : 0,
-            }}
-          >
-            <Typography level="title-sm">Sketch Controls</Typography>
-            <Stack spacing={0.5}>
-              <Typography level="body-sm"><strong>1</strong> - pencil</Typography>
-              <Typography level="body-sm"><strong>2</strong> - line</Typography>
-              <Typography level="body-sm"><strong>3</strong> - square</Typography>
-              <Typography level="body-sm"><strong>4</strong> - circle</Typography>
-              <Typography level="body-sm"><strong>ctrl/cmd + z</strong> - undo</Typography>
-              <Typography level="body-sm"><strong>ctrl/cmd + shift + z</strong> - redo</Typography>
-              <Typography level="body-sm"><strong>shift + delete</strong> - clear</Typography>
-            </Stack>
-
-            <Divider />
-
-            <Typography level="title-sm">Video Controls</Typography>
-            <Stack spacing={0.5}>
-              <Typography level="body-sm"><strong>j</strong> - speed down 25%</Typography>
-              <Typography level="body-sm"><strong>k</strong> - play/pause</Typography>
-              <Typography level="body-sm"><strong>l</strong> - speed up 25%</Typography>
-              <Typography level="body-sm"><strong>left arrow</strong> - volume down</Typography>
-              <Typography level="body-sm"><strong>right arrow</strong> - volume up</Typography>
-              <Typography level="body-sm"><strong>m</strong> - mute</Typography>
-            </Stack>
+        {/* Scrollable Content */}
+        <Stack
+          spacing={1}
+          sx={{
+            display: isKeybindsOpen ? 'flex' : 'none',
+            overflow: 'auto',
+            px: 2,
+            pb: isKeybindsOpen ? 2 : 0,
+          }}
+        >
+          <Typography level="title-sm">Sketch Controls</Typography>
+          <Stack spacing={0.5}>
+            <Typography level="body-sm"><strong>1</strong> - pencil</Typography>
+            <Typography level="body-sm"><strong>2</strong> - line</Typography>
+            <Typography level="body-sm"><strong>3</strong> - square</Typography>
+            <Typography level="body-sm"><strong>4</strong> - circle</Typography>
+            <Typography level="body-sm"><strong>ctrl/cmd + z</strong> - undo</Typography>
+            <Typography level="body-sm"><strong>ctrl/cmd + shift + z</strong> - redo</Typography>
+            <Typography level="body-sm"><strong>shift + delete</strong> - clear</Typography>
           </Stack>
 
-          {/* Source Code Link - Always Visible */}
-          <Link
-            href="https://github.com/Twaites/Telestrator"
-            target="_blank"
-            rel="noopener noreferrer"
-            level="body-sm"
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 1,
-              color: 'neutral.500',
-              textDecoration: 'none',
-              pl: 1.5,
+          <Divider />
+
+          <Typography level="title-sm">Video Controls</Typography>
+          <Stack spacing={0.5}>
+            <Typography level="body-sm"><strong>j</strong> - speed down 25%</Typography>
+            <Typography level="body-sm"><strong>k</strong> - play/pause</Typography>
+            <Typography level="body-sm"><strong>l</strong> - speed up 25%</Typography>
+            <Typography level="body-sm"><strong>left arrow</strong> - volume down</Typography>
+            <Typography level="body-sm"><strong>right arrow</strong> - volume up</Typography>
+            <Typography level="body-sm"><strong>m</strong> - mute</Typography>
+          </Stack>
+        </Stack>
+
+        {/* Source Code Link - Always at bottom */}
+        <Link
+          href="https://github.com/Twaites/Telestrator"
+          target="_blank"
+          rel="noopener noreferrer"
+          level="body-sm"
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 1,
+            color: 'neutral.500',
+            textDecoration: 'none',
+            pl: 1.5,
               pb: 1.5,
               ...(isKeybindsOpen && {
                 borderTop: '1px solid',
                 borderColor: 'divider',
                 pt: 1.5,
               }),
-              '&:hover': {
-                color: 'primary.main',
-                textDecoration: 'underline'
-              }
-            }}
-          >
-            <Github size={16} />
-            View Source Code
-          </Link>
-        </Stack>
+            '&:hover': {
+              color: 'primary.main',
+              textDecoration: 'underline'
+            }
+          }}
+        >
+          <Github size={16} />
+          View Source Code
+        </Link>
       </Stack>
     </Stack>
   );
