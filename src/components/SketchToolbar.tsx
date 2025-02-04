@@ -13,7 +13,6 @@ export default function SketchToolbar() {
   };
 
   useEffect(() => {
-
     const handleKeyPress = (event: KeyboardEvent) => {
       // Prevent handling if user is typing in input
       if (event.target instanceof HTMLInputElement) return;

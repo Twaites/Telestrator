@@ -13,20 +13,21 @@ export default function SketchCanvas() {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (event.shiftKey && (event.key === 'Delete' || event.key === 'Backspace')) {
+      // Prevent handling if user is typing in input
+      if (event.target instanceof HTMLInputElement) return;
+
+      if (event.shiftKey && event.key === 'Delete') {
         sketchRef.current?.clear();
+        return;
       }
-      switch (event.code) {
-        case 'ArrowLeft':
-          if (event.shiftKey) {
-            sketchRef.current?.undo();
-          }
-          break;
-        case 'ArrowRight':
-          if (event.shiftKey) {
-            sketchRef.current?.redo();
-          }
-          break;
+
+      if (event.ctrlKey && event.key === 'z') {
+        if (event.shiftKey) {
+          sketchRef.current?.redo();
+        } else {
+          sketchRef.current?.undo();
+        }
+        return;
       }
     };
 

@@ -30,43 +30,32 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      // Prevent default behavior for these keys
-      if (['Space', 'ArrowUp', 'ArrowDown'].includes(event.code)) {
+      // Prevent handling if user is typing in input
+      if (event.target instanceof HTMLInputElement) return;
+
+      // Prevent default behavior for volume keys
+      if (['ArrowLeft', 'ArrowRight'].includes(event.code)) {
         event.preventDefault();
       }
 
-      // Ignore if any modifier keys are pressed
-      if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
-        return;
-      }
-
-      switch (event.code) {
-        
-        // Play/Pause - Space or K
-        case 'Space':
-        case 'KeyK':
+      switch (event.key) {
+        case 'k':
           setPlayStatus(!playStatus);
           break;
-
-        // Speed controls - Left/Right arrows
-        case 'KeyJ':
+        case 'j':
           setPlaybackSpeed(Math.max(0.25, playbackSpeed - 0.25));
           break;
-        case 'KeyL':
+        case 'l':
           setPlaybackSpeed(Math.min(1, playbackSpeed + 0.25));
           break;
-
-        // Volume controls - Up/Down arrows
-        case 'ArrowUp':
-          setVolumeLevel(Math.min(1, volumeLevel + 0.1));
+        case 'm':
+          toggleMute();
           break;
-        case 'ArrowDown':
+        case 'ArrowLeft':
           setVolumeLevel(Math.max(0, volumeLevel - 0.1));
           break;
-
-        // Mute - M
-        case 'KeyM':
-          toggleMute();
+        case 'ArrowRight':
+          setVolumeLevel(Math.min(1, volumeLevel + 0.1));
           break;
       }
     };
