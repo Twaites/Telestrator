@@ -16,12 +16,15 @@ export default function SketchCanvas() {
       // Prevent handling if user is typing in input
       if (event.target instanceof HTMLInputElement) return;
 
+      // Support both Ctrl (Windows) and Cmd (Mac)
+      const isModifierKey = event.ctrlKey || event.metaKey;
+
       if (event.shiftKey && event.key === 'Delete') {
         sketchRef.current?.clear();
         return;
       }
 
-      if (event.ctrlKey && event.key === 'z') {
+      if (isModifierKey && event.key === 'z') {
         if (event.shiftKey) {
           sketchRef.current?.redo();
         } else {
