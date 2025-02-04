@@ -3,8 +3,13 @@ import { SketchField } from 'react-sketch2';
 import { useSketchStore } from '../state/SketchState';
 
 export default function SketchCanvas() {
-  const { currentTool, lineColor, lineWidth } = useSketchStore();
+  const { currentTool, lineColor, lineWidth, setSketchRef } = useSketchStore();
   const sketchRef = useRef<typeof SketchField>(null);
+
+  useEffect(() => {
+    setSketchRef(sketchRef);
+    return () => setSketchRef(null);
+  }, [setSketchRef]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {

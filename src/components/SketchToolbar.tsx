@@ -6,7 +6,7 @@ import ColorPicker from './ColorPicker';
 import { useEffect } from 'react';
 
 export default function SketchToolbar() {
-  const { currentTool, setCurrentTool } = useSketchStore();
+  const { currentTool, setCurrentTool, sketchRef } = useSketchStore();
 
   const getButtonVariant = (tool: string) => {
     return tool === currentTool ? 'solid' : 'soft';
@@ -46,6 +46,24 @@ export default function SketchToolbar() {
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [setCurrentTool]);
+
+  const handleUndo = () => {
+    if (sketchRef?.current?.canUndo()) {
+      sketchRef.current.undo();
+    }
+  };
+
+  const handleRedo = () => {
+    if (sketchRef?.current?.canRedo()) {
+      sketchRef.current.redo();
+    }
+  };
+
+  const handleClear = () => {
+    if (sketchRef?.current) {
+      sketchRef.current.clear();
+    }
+  };
 
   return (
     <Stack 
@@ -131,6 +149,7 @@ export default function SketchToolbar() {
           <Button 
             variant="plain" 
             color="primary"
+            onClick={handleUndo}
             sx={{ 
               flex: 1, 
               borderRight: '1px solid', 
@@ -143,6 +162,7 @@ export default function SketchToolbar() {
           <Button 
             variant="plain" 
             color="primary"
+            onClick={handleRedo}
             sx={{ 
               flex: 1, 
               borderRadius: 0,
@@ -154,6 +174,7 @@ export default function SketchToolbar() {
         <Button 
           variant="plain" 
           color="primary"
+          onClick={handleClear}
           sx={{ 
             borderTop: '1px solid', 
             borderColor: 'divider',
