@@ -48,34 +48,132 @@ export default function SketchToolbar() {
   }, [setCurrentTool]);
 
   return (
-    <Stack spacing={2} padding={2}>
-      <ButtonGroup variant="soft" color="neutral" spacing={0.5}>
+    <Stack spacing={2} sx={{ width: '100%', maxWidth: 300, margin: '0 auto', p: 2, bgcolor: '#1a1a1a' }}>
+      {/* Color Picker Section */}
+      <Stack 
+        sx={{ 
+          border: '1px solid',
+          borderColor: '#2a2a2a',
+          borderRadius: 1,
+          p: 2,
+          bgcolor: '#2a2a2a'
+        }}
+      >
+        <ColorPicker />
+
+      {/* Tools Section */}
+      <ButtonGroup 
+        variant="plain" 
+        sx={{ 
+          display: 'flex', 
+          justifyContent: 'space-between',
+          bgcolor: '#2a2a2a',
+          '& .MuiButton-root': {
+            flex: 1,
+            borderRadius: 0,
+            color: '#fff',
+            '&:hover': {
+              bgcolor: 'rgba(255, 255, 255, 0.1)',
+            },
+          }
+        }}
+      >
         <Button
           variant={getButtonVariant(Tools.Pencil)}
           onClick={() => setCurrentTool(Tools.Pencil)}
+          color="primary"
         >
-          <Pencil size={24} />
+          <Stack spacing={1} alignItems="center">
+            <Pencil size={20} />
+          </Stack>
         </Button>
         <Button
           variant={getButtonVariant(Tools.Line)}
           onClick={() => setCurrentTool(Tools.Line)}
+          color="primary"
         >
-          <Slash size={24} />
+          <Stack spacing={1} alignItems="center">
+            <Slash size={20} />
+          </Stack>
         </Button>
         <Button
           variant={getButtonVariant(Tools.Rectangle)}
           onClick={() => setCurrentTool(Tools.Rectangle)}
+          color="primary"
         >
-          <Square size={24} />
+          <Stack spacing={1} alignItems="center">
+            <Square size={20} />
+          </Stack>
         </Button>
         <Button
           variant={getButtonVariant(Tools.Circle)}
           onClick={() => setCurrentTool(Tools.Circle)}
+          color="primary"
         >
-          <Circle size={24} />
+          <Stack spacing={1} alignItems="center">
+            <Circle size={20} />
+          </Stack>
         </Button>
       </ButtonGroup>
-      <ColorPicker />
+      </Stack>
+      {/* Undo/Redo/Clear Section */}
+      <Stack 
+        sx={{ 
+          border: '1px solid',
+          borderColor: '#2a2a2a',
+          borderRadius: 2,
+          overflow: 'hidden',
+          bgcolor: '#2a2a2a'
+        }}
+      >
+        <Stack direction="row">
+          <Button 
+            variant="plain" 
+            color="primary"
+            sx={{ 
+              flex: 1, 
+              borderRight: '1px solid', 
+              borderColor: '#1a1a1a',
+              borderRadius: 0,
+              color: '#fff',
+              '&:hover': {
+                bgcolor: 'rgba(255, 255, 255, 0.1)',
+              }
+            }}
+          >
+            Undo
+          </Button>
+          <Button 
+            variant="plain" 
+            color="primary"
+            sx={{ 
+              flex: 1, 
+              borderRadius: 0,
+              color: '#fff',
+              '&:hover': {
+                bgcolor: 'rgba(255, 255, 255, 0.1)',
+              }
+            }}
+          >
+            Redo
+          </Button>
+        </Stack>
+        <Button 
+          variant="plain" 
+          color="primary"
+          sx={{ 
+            borderTop: '1px solid', 
+            borderColor: '#1a1a1a',
+            borderRadius: 0,
+            color: '#fff',
+            '&:hover': {
+              bgcolor: 'rgba(255, 255, 255, 0.1)',
+            }
+          }}
+        >
+          Clear
+        </Button>
+      </Stack>
     </Stack>
   );
 }
