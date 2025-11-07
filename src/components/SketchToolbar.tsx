@@ -199,8 +199,8 @@ export default function SketchToolbar() {
                 zIndex: 1,
                 pt: 5,
                 pb: 0,
-                left: 2,
-                width: 'calc(100% - 5px)',
+                left: 5,
+                maxWidth: '125px',
               }}
             />
           </Stack>
