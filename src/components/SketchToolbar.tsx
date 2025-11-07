@@ -192,12 +192,15 @@ export default function SketchToolbar() {
               step={1}
               valueLabelDisplay="auto"
               color="primary"
-              size="md"
+              variant="solid"
+              size="sm"
               sx={{
                 flex: 1,
                 zIndex: 1,
                 pt: 5,
                 pb: 0,
+                left: 2,
+                width: 'calc(100% - 5px)',
               }}
             />
           </Stack>
