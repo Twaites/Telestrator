@@ -8,6 +8,7 @@ import SpeedMenu from './SpeedMenu';
 const VideoControls = () => {
   const [inputVideoUrl, setInputVideoUrl] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const addressBarRef = useRef<HTMLDivElement>(null);
   
   const { 
     currentVideoUrl,
@@ -87,19 +88,21 @@ const VideoControls = () => {
   return (
     <Stack spacing={1} sx={{ width: '100%', p: 1}}>
       <Stack direction="row" spacing={1}>
-        <Autocomplete
-          sx={{ 
-            width: '100%',
-            py:0,
-          }}
-          placeholder="Enter video URL"
-          value={currentVideoUrl}
-          options={videoUrlHistory}
-          onInputChange={(_, value) => setInputVideoUrl(value)}
-          freeSolo
-          disableClearable={true}
-          openOnFocus={true}
-        />
+        <Box ref={addressBarRef} data-address-bar-container sx={{ width: '100%' }}>
+          <Autocomplete
+            sx={{ 
+              width: '100%',
+              py:0,
+            }}
+            placeholder="Enter video URL"
+            value={currentVideoUrl}
+            options={videoUrlHistory}
+            onInputChange={(_, value) => setInputVideoUrl(value)}
+            freeSolo
+            disableClearable={true}
+            openOnFocus={true}
+          />
+        </Box>
         <input
           type="file"
           ref={fileInputRef}

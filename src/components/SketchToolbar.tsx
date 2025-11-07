@@ -1,12 +1,12 @@
 import { Tools } from 'react-sketch2';
-import { ButtonGroup, Button, Stack, Typography, Divider, Tooltip, Link, Box } from '@mui/joy';
+import { ButtonGroup, Button, Stack, Typography, Divider, Tooltip, Link, Box, Slider } from '@mui/joy';
 import { Pencil, Slash, Square, Circle, Github, ChevronDown, ChevronUp } from 'lucide-react';
 import { useSketchStore } from '../state/SketchState';
 import ColorPicker from './ColorPicker';
 import { useEffect, useState } from 'react';
 
 export default function SketchToolbar() {
-  const { currentTool, setCurrentTool, sketchRef } = useSketchStore();
+  const { currentTool, setCurrentTool, sketchRef, lineWidth, setLineWidth } = useSketchStore();
   const [isKeybindsOpen, setIsKeybindsOpen] = useState(false);
 
   const getButtonVariant = (tool: string) => {
@@ -16,8 +16,12 @@ export default function SketchToolbar() {
   useEffect(() => {
 
     const handleKeyPress = (event: KeyboardEvent) => {
-      // Prevent handling if user is typing in input
-      if (event.target instanceof HTMLInputElement) return;
+      // Prevent handling if user is typing in the address bar
+      const target = event.target as HTMLElement;
+      const addressBar = document.querySelector('[data-address-bar-container]');
+      if (target instanceof HTMLInputElement && addressBar && addressBar.contains(target)) {
+        return;
+      }
 
       // Ignore if any modifier keys are pressed
       if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
@@ -49,9 +53,9 @@ export default function SketchToolbar() {
   }, [setCurrentTool]);
 
   return (
-    <Stack 
-      spacing={0} 
-      sx={{ 
+    <Stack
+      spacing={0}
+      sx={{
         width: '250px',
         height: '100vh',
         p: 1.5,
@@ -63,9 +67,9 @@ export default function SketchToolbar() {
       {/* Main Tools Section - Will stay at top */}
       <Stack spacing={2} sx={{ flexShrink: 0 }}>
         {/* Title Section */}
-        <Stack 
-          spacing={0} 
-          sx={{ 
+        <Stack
+          spacing={0}
+          sx={{
             mb: 0.5
           }}
         >
@@ -76,7 +80,7 @@ export default function SketchToolbar() {
               fontWeight: 400,
               letterSpacing: '0.02em',
               mb: -1.25,
-              mt:0,
+              mt: 0,
               textAlign: 'center'
             }}
           >
@@ -89,7 +93,7 @@ export default function SketchToolbar() {
               fontWeight: 300,
               letterSpacing: '0.02em',
               textAlign: 'right',
-              pr: 5 
+              pr: 5
             }}
           >
             by Twaites
@@ -97,78 +101,111 @@ export default function SketchToolbar() {
         </Stack>
 
         {/* Color Picker Section */}
-        <Stack 
-          sx={{ 
+        <Stack
+          sx={{
             border: '1px solid',
             borderColor: 'divider',
             borderRadius: 1,
             p: 1.5,
+            pb: 0,
           }}
           alignItems="center"
         >
           <ColorPicker />
 
-        {/* Tools Section */}
-        <ButtonGroup 
-          variant="plain" 
-          sx={{ 
-            display: 'flex', 
-            justifyContent: 'space-between',
-            '& .MuiButton-root': {
-              flex: 1,
-              borderRadius: 0,
-            }
-          }}
-        >
-          <Tooltip title="Pencil (1)" placement="top">
-            <Button
-              variant={getButtonVariant(Tools.Pencil)}
-              onClick={() => setCurrentTool(Tools.Pencil)}
+          {/* Tools Section */}
+          <ButtonGroup
+            variant="plain"
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              '& .MuiButton-root': {
+                flex: 1,
+                borderRadius: 0,
+              }
+            }}
+          >
+            <Tooltip title="Pencil (1)" placement="top">
+              <Button
+                variant={getButtonVariant(Tools.Pencil)}
+                onClick={() => setCurrentTool(Tools.Pencil)}
+                color="primary"
+              >
+                <Stack spacing={1} alignItems="center">
+                  <Pencil size={20} />
+                </Stack>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Line (2)" placement="top">
+              <Button
+                variant={getButtonVariant(Tools.Line)}
+                onClick={() => setCurrentTool(Tools.Line)}
+                color="primary"
+              >
+                <Stack spacing={1} alignItems="center">
+                  <Slash size={20} />
+                </Stack>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Rectangle (3)" placement="top">
+              <Button
+                variant={getButtonVariant(Tools.Rectangle)}
+                onClick={() => setCurrentTool(Tools.Rectangle)}
+                color="primary"
+              >
+                <Stack spacing={1} alignItems="center">
+                  <Square size={20} />
+                </Stack>
+              </Button>
+            </Tooltip>
+            <Tooltip title="Circle (4)" placement="top">
+              <Button
+                variant={getButtonVariant(Tools.Circle)}
+                onClick={() => setCurrentTool(Tools.Circle)}
+                color="primary"
+              >
+                <Stack spacing={1} alignItems="center">
+                  <Circle size={20} />
+                </Stack>
+              </Button>
+            </Tooltip>
+          </ButtonGroup>
+
+          {/* Tool Size Section */}
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            width="100%"
+            sx={{
+              pt: 1,
+            }}
+          >
+            <Typography level="body-xs" sx={{ fontSize: '0.9rem', minWidth: '35px' }}>
+              Tool Size
+            </Typography>
+            <Slider
+              value={lineWidth}
+              onChange={(_, value) => setLineWidth(value as number)}
+              min={1}
+              max={10}
+              step={1}
+              valueLabelDisplay="auto"
               color="primary"
-            >
-              <Stack spacing={1} alignItems="center">
-                <Pencil size={20} />
-              </Stack>
-            </Button>
-          </Tooltip>
-          <Tooltip title="Line (2)" placement="top">
-            <Button
-              variant={getButtonVariant(Tools.Line)}
-              onClick={() => setCurrentTool(Tools.Line)}
-              color="primary"
-            >
-              <Stack spacing={1} alignItems="center">
-                <Slash size={20} />
-              </Stack>
-            </Button>
-          </Tooltip>
-          <Tooltip title="Rectangle (3)" placement="top">
-            <Button
-              variant={getButtonVariant(Tools.Rectangle)}
-              onClick={() => setCurrentTool(Tools.Rectangle)}
-              color="primary"
-            >
-              <Stack spacing={1} alignItems="center">
-                <Square size={20} />
-              </Stack>
-            </Button>
-          </Tooltip>
-          <Tooltip title="Circle (4)" placement="top">
-            <Button
-              variant={getButtonVariant(Tools.Circle)}
-              onClick={() => setCurrentTool(Tools.Circle)}
-              color="primary"
-            >
-              <Stack spacing={1} alignItems="center">
-                <Circle size={20} />
-              </Stack>
-            </Button>
-          </Tooltip>
-        </ButtonGroup>
+              size="md"
+              sx={{
+                flex: 1,
+                zIndex: 1,
+                pt: 5,
+                pb: 0,
+              }}
+            />
+          </Stack>
         </Stack>
+
         {/* Undo/Redo/Clear Section */}
-        <Stack 
-          sx={{ 
+        <Stack
+          sx={{
             border: '1px solid',
             borderColor: 'divider',
             borderRadius: 2,
@@ -177,13 +214,13 @@ export default function SketchToolbar() {
         >
           <Stack direction="row">
             <Tooltip title="Undo (Ctrl/Cmd + Z)" placement="top">
-              <Button 
-                variant="plain" 
+              <Button
+                variant="plain"
                 color="primary"
                 onClick={() => sketchRef?.current?.undo()}
-                sx={{ 
-                  flex: 1, 
-                  borderRight: '1px solid', 
+                sx={{
+                  flex: 1,
+                  borderRight: '1px solid',
                   borderColor: 'divider',
                   borderRadius: 0,
                 }}
@@ -192,12 +229,12 @@ export default function SketchToolbar() {
               </Button>
             </Tooltip>
             <Tooltip title="Redo (Ctrl/Cmd + Shift + Z)" placement="top">
-              <Button 
-                variant="plain" 
+              <Button
+                variant="plain"
                 color="primary"
                 onClick={() => sketchRef?.current?.redo()}
-                sx={{ 
-                  flex: 1, 
+                sx={{
+                  flex: 1,
                   borderRadius: 0,
                 }}
               >
@@ -206,12 +243,12 @@ export default function SketchToolbar() {
             </Tooltip>
           </Stack>
           <Tooltip title="Clear (Shift + Delete)" placement="bottom">
-            <Button 
-              variant="plain" 
+            <Button
+              variant="plain"
               color="primary"
               onClick={() => sketchRef?.current?.clear()}
-              sx={{ 
-                borderTop: '1px solid', 
+              sx={{
+                borderTop: '1px solid',
                 borderColor: 'divider',
                 borderRadius: 0,
               }}
@@ -226,9 +263,9 @@ export default function SketchToolbar() {
       <Box sx={{ flexGrow: 1 }} />
 
       {/* Keybinds Section - At bottom, scrollable */}
-      <Stack 
+      <Stack
         spacing={1}
-        sx={{ 
+        sx={{
           border: '1px solid',
           borderColor: 'divider',
           borderRadius: 2,
@@ -303,12 +340,12 @@ export default function SketchToolbar() {
             color: 'neutral.500',
             textDecoration: 'none',
             pl: 1.5,
-              pb: 1.5,
-              ...(isKeybindsOpen && {
-                borderTop: '1px solid',
-                borderColor: 'divider',
-                pt: 1.5,
-              }),
+            pb: 1.5,
+            ...(isKeybindsOpen && {
+              borderTop: '1px solid',
+              borderColor: 'divider',
+              pt: 1.5,
+            }),
             '&:hover': {
               color: 'primary.main',
               textDecoration: 'underline'

@@ -11,10 +11,37 @@ export default function SketchCanvas() {
     return () => setSketchRef(null);
   }, [setSketchRef]);
 
+  // Update lineWidth when it changes - react-sketch2 may not react to prop changes
+  useEffect(() => {
+    if (sketchRef.current) {
+      const sketchField = sketchRef.current as any;
+      // Access the internal fabric canvas and update lineWidth for all brushes
+      if (sketchField._fc) {
+        const canvas = sketchField._fc;
+        // Update free drawing brush width
+        if (canvas.freeDrawingBrush) {
+          canvas.freeDrawingBrush.width = lineWidth;
+        }
+        // Update the lineWidth property on the component state
+        if (sketchField.state) {
+          sketchField.state.lineWidth = lineWidth;
+        }
+        // Force update if there's an update method
+        if (sketchField.forceUpdate) {
+          sketchField.forceUpdate();
+        }
+      }
+    }
+  }, [lineWidth]);
+
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      // Prevent handling if user is typing in input
-      if (event.target instanceof HTMLInputElement) return;
+      // Prevent handling if user is typing in the address bar
+      const target = event.target as HTMLElement;
+      const addressBar = document.querySelector('[data-address-bar-container]');
+      if (target instanceof HTMLInputElement && addressBar && addressBar.contains(target)) {
+        return;
+      }
 
       // Support both Ctrl (Windows) and Cmd (Mac)
       const isModifierKey = event.ctrlKey || event.metaKey;

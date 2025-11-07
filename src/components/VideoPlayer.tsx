@@ -30,8 +30,12 @@ export default function VideoPlayer() {
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      // Prevent handling if user is typing in input
-      if (event.target instanceof HTMLInputElement) return;
+      // Prevent handling if user is typing in the address bar
+      const target = event.target as HTMLElement;
+      const addressBar = document.querySelector('[data-address-bar-container]');
+      if (target instanceof HTMLInputElement && addressBar && addressBar.contains(target)) {
+        return;
+      }
 
       // Prevent default behavior for volume keys
       if (['ArrowLeft', 'ArrowRight'].includes(event.code)) {
