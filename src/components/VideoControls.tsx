@@ -1,12 +1,13 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Button, Slider, Stack, Autocomplete, IconButton, Box, Tooltip } from '@mui/joy';
 import { useVideoStore } from '../state/VideoState';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Upload } from 'lucide-react';
 import { formatTime } from '../utils/formatTime';
 import SpeedMenu from './SpeedMenu';
 
 const VideoControls = () => {
   const [inputVideoUrl, setInputVideoUrl] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
   
   const { 
     currentVideoUrl,
@@ -36,6 +37,20 @@ const VideoControls = () => {
       addToUrlHistory(newUrl);
     }
   }, [currentVideoUrl, setVideoUrl, addToUrlHistory]);
+
+  const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Create a URL for the local file
+      const fileUrl = URL.createObjectURL(file);
+      // Set the input URL to the file URL (this will enable the Load Video button)
+      setInputVideoUrl(fileUrl);
+    }
+  }, []);
+
+  const handleUploadClick = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
 
   const currentTime = (videoProgress / 1000) * duration;
 
@@ -85,6 +100,23 @@ const VideoControls = () => {
           disableClearable={true}
           openOnFocus={true}
         />
+        <input
+          type="file"
+          ref={fileInputRef}
+          style={{ display: 'none' }}
+          accept="video/*"
+          onChange={handleFileUpload}
+        />
+        <Tooltip title="Upload video from disk">
+          <IconButton
+            variant="soft"
+            color="neutral"
+            onClick={handleUploadClick}
+            size="sm"
+          >
+            <Upload size={20} />
+          </IconButton>
+        </Tooltip>
         <Button
           variant="solid"
           sx={{ bgcolor: '#2196f3', minWidth: 110 }}
