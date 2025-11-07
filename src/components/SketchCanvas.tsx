@@ -22,6 +22,15 @@ export default function SketchCanvas() {
         if (canvas.freeDrawingBrush) {
           canvas.freeDrawingBrush.width = lineWidth;
         }
+        if (canvas.lineBrush) {
+          canvas.lineBrush.width = lineWidth;
+        }
+        if (canvas.rectangleBrush) {
+          canvas.rectangleBrush.width = lineWidth;
+        }
+        if (canvas.circleBrush) {
+          canvas.circleBrush.width = lineWidth;
+        }
         // Update the lineWidth property on the component state
         if (sketchField.state) {
           sketchField.state.lineWidth = lineWidth;
