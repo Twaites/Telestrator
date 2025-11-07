@@ -15,6 +15,19 @@ export default function SketchToolbar() {
 
   useEffect(() => {
 
+    const sizeKeyMap: Record<string, number> = {
+      Digit1: 1,
+      Digit2: 2,
+      Digit3: 3,
+      Digit4: 4,
+      Digit5: 5,
+      Digit6: 6,
+      Digit7: 7,
+      Digit8: 8,
+      Digit9: 9,
+      Digit0: 10,
+    };
+
     const handleKeyPress = (event: KeyboardEvent) => {
       // Prevent handling if user is typing in the address bar
       const target = event.target as HTMLElement;
@@ -23,8 +36,17 @@ export default function SketchToolbar() {
         return;
       }
 
-      // Ignore if any modifier keys are pressed
-      if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
+      const hasDisallowedModifier = event.ctrlKey || event.metaKey || event.altKey;
+      if (hasDisallowedModifier) {
+        return;
+      }
+
+      if (event.shiftKey) {
+        const size = sizeKeyMap[event.code];
+        if (size) {
+          event.preventDefault();
+          setLineWidth(size);
+        }
         return;
       }
 
@@ -50,7 +72,7 @@ export default function SketchToolbar() {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [setCurrentTool]);
+  }, [setCurrentTool, setLineWidth]);
 
   return (
     <Stack
@@ -315,6 +337,7 @@ export default function SketchToolbar() {
             <Typography level="body-sm"><strong>ctrl/cmd + z</strong> - undo</Typography>
             <Typography level="body-sm"><strong>ctrl/cmd + shift + z</strong> - redo</Typography>
             <Typography level="body-sm"><strong>shift + delete</strong> - clear</Typography>
+            <Typography level="body-sm"><strong>shift + #</strong> - adjust tool size</Typography>
           </Stack>
 
           <Divider />
