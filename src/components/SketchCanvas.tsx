@@ -17,7 +17,7 @@ export default function SketchCanvas() {
       const sketchField = sketchRef.current as any;
       // Access the internal fabric canvas and update lineWidth for all brushes
       if (sketchField._fc) {
-        const canvas = sketchField._fc;
+        
         // Update the lineWidth property on the component state
         if (sketchField.state) {
           sketchField.state.lineWidth = lineWidth;
