@@ -18,19 +18,6 @@ export default function SketchCanvas() {
       // Access the internal fabric canvas and update lineWidth for all brushes
       if (sketchField._fc) {
         const canvas = sketchField._fc;
-        // Update free drawing brush width
-        if (canvas.freeDrawingBrush) {
-          canvas.freeDrawingBrush.width = lineWidth;
-        }
-        if (canvas.lineBrush) {
-          canvas.lineBrush.width = lineWidth;
-        }
-        if (canvas.rectangleBrush) {
-          canvas.rectangleBrush.width = lineWidth;
-        }
-        if (canvas.circleBrush) {
-          canvas.circleBrush.width = lineWidth;
-        }
         // Update the lineWidth property on the component state
         if (sketchField.state) {
           sketchField.state.lineWidth = lineWidth;
@@ -41,7 +28,7 @@ export default function SketchCanvas() {
         }
       }
     }
-  }, [lineWidth]);
+  }, [lineWidth, currentTool]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
