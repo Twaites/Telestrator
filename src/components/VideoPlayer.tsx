@@ -1,10 +1,9 @@
 import { useRef, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { useVideoStore } from '../state/VideoState';
-import type { SyntheticEvent } from 'react';
 
 export default function VideoPlayer() {
-  const playerRef = useRef<HTMLVideoElement>(null);
+  const playerRef = useRef<ReactPlayer>(null);
   const { 
     currentVideoUrl,
     playbackSpeed,
@@ -83,22 +82,20 @@ export default function VideoPlayer() {
       playbackRate={playbackSpeed}
       muted={muted}
       controls={false}
-      src={currentVideoUrl}
+      url={currentVideoUrl}
       width='100%'
       height='100%'
       playing={playStatus}
       onPause={() => setPlayStatus(false)}
       onEnded={() => setPlayStatus(false)}
       volume={volumeLevel}
-      onTimeUpdate={(e: SyntheticEvent<HTMLVideoElement>) => {
+      onProgress={e => {
         if (!seeking) {
-          const { currentTime, duration } = e.currentTarget;
-          setVideoProgress((currentTime / duration) * 1000);
+          setVideoProgress(e.played * 1000);
         }
       }}
       onError={handleError}
-      onDurationChange={(e: SyntheticEvent<HTMLVideoElement>) => {
-        const duration = e.currentTarget.duration;
+      onDuration={(duration) => {
         setDuration(duration);
         setIsLive(duration === Infinity);
       }}
