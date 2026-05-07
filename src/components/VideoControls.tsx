@@ -73,9 +73,11 @@ const VideoControls = () => {
 
   const handleSeekCommitted = useCallback((_: any, value: number | number[]) => {
     const seekTo = (value as number) / 1000;
-    playerRef?.current?.seekTo(seekTo);
+    if (playerRef?.current) {
+      playerRef.current.currentTime = seekTo * duration;
+    }
     setSeeking(false);
-  }, [playerRef, setSeeking]);
+  }, [playerRef, setSeeking, duration]);
 
   const handlePlayPause = useCallback(() => {
     setPlayStatus(!playStatus);

@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import ReactPlayer from 'react-player';
 
 interface VideoState {
   currentVideoUrl: string;
@@ -12,7 +11,7 @@ interface VideoState {
   seeking: boolean;
   duration: number;
   isLive: boolean;
-  playerRef: React.RefObject<ReactPlayer> | null;
+  playerRef: React.RefObject<HTMLVideoElement | null> | null;
   setVideoUrl: (url: string) => void;
   addToUrlHistory: (url: string) => void;
   setPlaybackSpeed: (speed: number) => void;
@@ -23,7 +22,7 @@ interface VideoState {
   setSeeking: (seeking: boolean) => void;
   setDuration: (duration: number) => void;
   setIsLive: (isLive: boolean) => void;
-  setPlayerRef: (ref: React.RefObject<ReactPlayer> | null) => void;
+  setPlayerRef: (ref: React.RefObject<HTMLVideoElement | null> | null) => void;
 }
 
 export const useVideoStore = create<VideoState>((set) => ({
